@@ -62,7 +62,6 @@ Expression profiling by array
 | Number of samples | 146	  | 285					   |
 | Number of genes / samples | 54'613 | 54'612		   |
 | Data in sample | 2 columns (ID_REF and VALUE) | 2 columns (ID_REF and VALUE) |
-| ---- | -------------------- | ---------------------- |
 | Age of child | Yes		  | Yes 				   |
 | Age of parents | Yes		  | No 					   |
 | Gender | No		  		  | Yes 				   |
