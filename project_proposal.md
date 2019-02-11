@@ -25,59 +25,50 @@ In both datasets, RNA was amplified, labeled and hybridized, the source of the R
 In both datasets, the subjects are children suffering from Autism Spectrum Disorder (ASD) or not.
 
 In both datasets, the samples assign a measured expression value to the corresponding gene reference ID.
-In the first sample, the measured value is the RMA signal intensity.
+In the first sample, the measured value is the Robust Microarray Analysis (RMA) signal intensity.
 In the second sample, the measured value is the Probe Logarithmic Intensity Error (PLIER) signal intensity.
 The samples from both datasets each contain 54613 rows and the same gene reference ids, as the same kits were used.
 
 
 ### Technology used to generate the data.
+
 #### Dataset 1 (paternal): 
-- Expression profiling by array
-- Qiagen Qiaquick kit used on blood draw
+Expression profiling by array
+- Use of Qiagen Qiaquick kit on blood draw
 - Double round amplification, followed by biotin-labelling using Affymetrix's GeneCHip Two-Cyle Target Labeling kit
 - Checks for evenly distributed range of transcript size, verification of fragmentation
 - Hybridization cocktails hybridized on Affymetrix Human Genome U133 Plus 2.0 Array (in situ oligonucleotide)
- - Washing
- - Scanned on Affymetrix's GeneChip Scanner 3000 7G
-- Extraction of raw signal intensity from scanned images of the array.
-- The scanning was performed on two different machines, however 
-> Gene expression levels were not adjusted for possible batch effects as algorithms that attempt to adjust for batch effects also alter the gene expression distribution.
+- Washing and scanning on Affymetrix's GeneChip Scanner 3000 7G
+- Extraction of raw signal intensity from scanned images of the array in two batches (on two machines).
+- No adjustment made for possible batch effects as the algorithms alter the gene expression distribution.
 - Analysis of covariance of batch numbers.
-- MAS 5.0 was used for the analysis of gene expression distribution (does not alter it)
-- RMA (uses quantile normalization and my remove group level differences in gene expression distribution) was used for the gene expression analysis "looking for specific gene expression differences between groups."
-
+- Analysis of gene expression distribution with MAS 5.0 (no alteration by algorithm)
+- Analysis of gene expression with RMA (uses quantile normalization and my remove group level differences in gene expression distribution), looking for specific gene expression differences between groups.
 
 #### Dataset 2 (predictive):
-- Expression profiling by array
+Expression profiling by array
 - Trizol extraction of total RNA according to manufacturer
 - Generation of biotin-labeled cRNA according to Affymetrix protocols
 - Quantification (A260) and fragmentation of cRNA
 - Hybridization of fragmented cRNA on GeneChips (Affymetrix Human Genome U133 Plus 2.0 Array)
 - Scanning using Affymetrix GeneChip scanner 3000 at 2.5 microm resultion
-- Affymetrix Human Gene 1.0 ST Array was also used
-- The final recored signal intensity is the PLIER of the samples
+- Recording of PLIER of the samples as signal intensity
 
 ### Description of data
-#### Dataset 1:
-- 663.4 MB
-- 146 samples
-- 54613 rows (genes) per sample
-- 2 columns (ID_REF, VALUE) per sample
-- Age of child and parents
-- (No gender)
-- Scan batch number
 
-#### Dataset 2:
-- 1.2 GB
-- 285 samples
-- 54612 rows(genes) per sample
-- 2 columns (ID_REF, VALUE) per sample
-- Gender
-- Age of child
-- Ethnicity of child
-- Diagnosis
-- Ethnicity
-- Other diseases
+| Data | Dataset 1 (Paternal) | Dataset 2 (Predictive) |
+| ---- | -------------------- | ---------------------- |
+| Size | 663.4 MB 			  | 1.2 GB				   |
+| Number of samples | 146	  | 285					   |
+| Number of genes / samples | 54'613 | 54'612		   |
+| Data in sample | 2 columns (ID_REF and VALUE) | 2 columns (ID_REF and VALUE) |
+| Age of child | Yes		  | Yes 				   |
+| Age of parents | Yes		  | No 					   |
+| Gender | No		  		  | Yes 				   |
+| Ethnicity | No			  | Yes					   |
+| Specific diagnosis | No	  | Yes 				   |
+| Other diseases | No		  | Yes					   |
+| Scan batch number | Yes     | Not needed			   |
 
 ## Aims and methodology
 
