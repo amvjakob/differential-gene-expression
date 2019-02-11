@@ -77,10 +77,17 @@ The first dataset is limited in information compared to the second dataset, so t
 Both datasets did not look at the significance of sample patient age affecting gene expression profiles, even though the second dataset acknowledged that patient age at blood draw significantly influenced different gene expression levels of certain genes. We will rebuild a prediction model based on the second dataset, but also factor in subgrouping samples into different age groups. Statistical methods involved in building our new prediction model will include linear regression and logistic regression (because our response will only have two values - control vs autism). Building our new prediction model will also involve machine learning tools (ie. random forest algorithm) to help us verify the results of our prior clustering analysis. Our prediction model will also be verified by predicting control vs autism of the samples in the first dataset to test the sensitivity and accuracy of our model.
 
 [1] [Srivastava, Anand K., and Charles E. Schwartz. "Intellectual disability and autism spectrum disorders: causal genes and molecular mechanisms." Neuroscience & Biobehavioral Reviews 46 (2014): 161-174.](https://www.sciencedirect.com/science/article/pii/S0149763414000773)
+
 [2] [Anney, Richard, Lambertus Klei, Dalila Pinto, Joana Almeida, Elena Bacchelli, Gillian Baird, Nadia Bolshakova et al. "Individual common variants exert weak effects on the risk for autism spectrum disorders." Human molecular genetics 21, no. 21 (2012): 4781-4792.](https://academic.oup.com/hmg/article/21/21/4781/781997)
+
 [3] [Liu, Li, Aniko Sabo, Benjamin M. Neale, Uma Nagaswamy, Christine Stevens, Elaine Lim, Corneliu A. Bodea et al. "Analysis of rare, exonic variation amongst subjects with autism spectrum disorders and population controls." PLoS genetics 9, no. 4 (2013): e1003443.](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1003443)
+
 [4] [Alter, Mark D., Rutwik Kharkar, Keri E. Ramsey, David W. Craig, Raun D. Melmed, Theresa A. Grebe, R. Curtis Bay et al. "Autism and increased paternal age related changes in global levels of gene expression regulation." PloS one 6, no. 2 (2011): e16715.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3040743/)
+
 [5] [Kong, Sek Won, Christin D. Collins, Yuko Shimizu-Motohashi, Ingrid A. Holm, Malcolm G. Campbell, In-Hee Lee, Stephanie J. Brewster et al. "Characteristics and predictive value of blood transcriptome signature in males with autism spectrum disorders." PLoS One 7, no. 12 (2012): e49475.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0049475)
+
 [6] [Chow, Maggie L., Tiziano Pramparo, Mary E. Winn, Cynthia Carter Barnes, Hai-Ri Li, Lauren Weiss, Jian-Bing Fan et al. "Age-dependent brain gene expression and copy number anomalies in autism suggest distinct pathological processes at young versus mature ages." PLoS genetics 8, no. 3 (2012): e1002592.​](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002592​)
-[7] [Dataset 1 (paternal)](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE25507)
-[8] [Dataset 2 (predictive)](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE18123)
+
+[7] [Dataset 1](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE25507)
+
+[8] [Dataset 2](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE18123)
