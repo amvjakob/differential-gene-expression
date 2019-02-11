@@ -78,6 +78,8 @@ Both datasets did not look at the significance of sample patient age affecting g
 
 Building our new prediction model will also involve machine learning tools to help us verify the results of our prior clustering analysis. The first aim in this domain will be to replicate the model and findings of the second study, and further aims include the utilization of different machine learning models (random forests, PCA, non-negative matrix factorization, sparse models, deep neural networks, clustering, ...) and feature selection to find groups of genes correlated with ASD or not, potentially revealing unknown interactions between genes associated with ASD, and comparing the findings with the previous statistical analyses. Our prediction model will also be verified by predicting control vs autism of the samples in the first dataset to test the sensitivity and accuracy of our model.
 
+## References
+
 [1] [Srivastava, Anand K., and Charles E. Schwartz. "Intellectual disability and autism spectrum disorders: causal genes and molecular mechanisms." Neuroscience & Biobehavioral Reviews 46 (2014): 161-174.](https://www.sciencedirect.com/science/article/pii/S0149763414000773)
 
 [2] [Anney, Richard, Lambertus Klei, Dalila Pinto, Joana Almeida, Elena Bacchelli, Gillian Baird, Nadia Bolshakova et al. "Individual common variants exert weak effects on the risk for autism spectrum disorders." Human molecular genetics 21, no. 21 (2012): 4781-4792.](https://academic.oup.com/hmg/article/21/21/4781/781997)
@@ -93,3 +95,7 @@ Building our new prediction model will also involve machine learning tools to he
 [7] [Dataset 1](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE25507)
 
 [8] [Dataset 2](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE18123)
+
+[9] [Cluster Analysis for Gene Expression Data](https://cse.buffalo.edu/DBGROUP/bioinformatics/papers/survey.pdf)
+
+[10] [Principal Component Analysis for clustering gene expression data](http://faculty.washington.edu/kayee/pca/bioinformaticspca.pdf)
