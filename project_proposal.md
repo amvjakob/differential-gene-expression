@@ -11,9 +11,9 @@ The most common neurodevelopmental disorders, Intellectual Disability (ID) and A
 
 | Name | Background | Affiliation | Responsibilites | 
 | ------------- | ------------- | ------------- | ------------- |
-| Benson Chang | Biotechnology, Biological Engineering | Genome Science and Technology |  Analysis literature validation |
-| Virginia Pichler |  Genomic Epidemiology| Microbiology and Immunology | Literature search |
-| Yanchao Luo | Statistical methods and Empirical Likelihood | Department of Statistics | Data cleaning & processing | 
+| Benson Chang | Biotechnology, Biological Engineering | Genome Science and Technology |  Analysis literature validation, Data visualization, Statistical analysis, Data interpretation |
+| Virginia Pichler |  Genomic Epidemiology| Microbiology and Immunology | Literature search, Project planning, Data inspection/Quality control |
+| Yanchao Luo | Statistical methods and Empirical Likelihood | Department of Statistics | Data cleaning & processing, Statistical analysis (hypothesis testing), Data visualization | 
 | Anthony Jakob | Biological Engineering | Biomedical Engineering | Machine learning model |
 
 ## Dataset
