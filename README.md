@@ -7,4 +7,5 @@ This is the repository of team Y0ung parents. It contains the work of a group of
 # Project Goals
 
 The links below will provide readers with a description of our aims.
+
 [Project proposal](project_proposal.md)
