@@ -2,9 +2,20 @@
 
 ## Motivation and background work
 
-The most common neurodevelopmental disorders, Intellectual Disability (ID) and Autsim Spectrum Disorder (ASD), arise from three causative factors: genes, epigenetics and the environment [1]. Large-scale whole exome sequencing studies have found there is no single gene, but a collection of rare variants distributed across many genes that confer the manifestation of ASD [2, 3]. The variants occur in regions of multiple general transcription factors, which lend to alterations in global levels of gene expression regulation. Expression profiles have been determined with the use of RNA sequencing data from blood samples to develop predictive risk assessments of ASD in children.  Previous studies have targeted peripheral blood lymphocytes [4] and whole blood [5] to generate transcriptome signatures, yet there has been no investigation as to whether these models may be cross-validated.  We are interested in comparing the global gene expression profiles of children with ASD from these two studies, while also utilising machine learning to evaluate the robustness of each data set as true predictive models. To further substantiate the veracity of the models, we will use the metadata to evaluate global expression signatures across age both intra- and inter-data sets.  Accounting for this variable is necessary as gene regulation in individuals with ASD has been shown to fluctuate over maturation [6]. The validation of predictive risk models is fundamental to the refinement of ASD diagnostic tools and may lend to the development of gene-targeted treatments.
+The most common neurodevelopmental disorders, Intellectual Disability (ID) and Autsim Spectrum Disorder (ASD), arise from three causative factors: genes, epigenetics and the environment[1]. Large-scale whole exome sequencing studies have found there is no single gene, but a collection of rare variants distributed across many genes that confer the manifestation of ASD[2],[3]. The variants occur in regions of multiple general transcription factors, which lend to alterations in global levels of gene expression regulation. Expression profiles have been determined with the use of RNA sequencing data from blood samples to develop predictive risk assessments of ASD in children. Previous studies have targeted peripheral blood lymphocytes[4] and whole blood[5] to generate transcriptome signatures, yet there has been no investigation as to whether one model may successfully be applied to a second, independent dataset. We are interested in comparing the global gene expression profiles of children with ASD versus a control group from these two studies, by recreating the predictive model using the data of the whole blood study and applying machine learning to evaluate the robustness of its true predictive power. To further substantiate the veracity of the models, we will use the metadata to evaluate global expression signatures across age. Accounting for this variable is necessary as gene regulation in individuals with ASD has been shown to fluctuate over maturation[6]. The validation of predictive risk models is fundamental to the refinement of ASD diagnostic tools and may lend to the development of gene-targeted treatments.
 
-[1](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4185273/?_escaped_fragment_=po=0.241546), [2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4185273/?_escaped_fragment_=po=0.241546#R5),  [3](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4185273/?_escaped_fragment_=po=0.241546#R116),  [4](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3040743/), [5](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0049475), [6](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002592)
+
+[1] https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4185273/?_escaped_fragment_=po=0.241546
+
+[2] https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4185273/?_escaped_fragment_=po=0.241546#R5
+
+[3] https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4185273/?_escaped_fragment_=po=0.241546#R116
+
+[4] https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3040743/
+
+[5] https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0049475
+
+[6] https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002592​
 
 
 ## Division of labour 
