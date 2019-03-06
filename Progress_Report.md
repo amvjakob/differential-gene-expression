@@ -1,0 +1,19 @@
+Progess Report
+================
+Virginia Pichler
+March 6, 2019
+
+#### What has changed based on the final proposal?
+
+Our datasets and analysis methods have remained the same as detailed in the project proposal. As an additional analysis, we will run cluster analysis and PCA on the full datasets, as well as the subsetted highest ranked genes from the application of machine learning (Python Logistic Regression). All project members are still performing the tasks described in the proposal.
+
+#### What is the progress of the analyses?
+
+*Hey team, all the bolded words below are basic notes to address these quesiton*
+
+• Since your initial proposal, you should have decided more concretely on what methods to use for each step of your analyses, and employed some of those methods. **Cluster analysis, PCA** • Briefly and concisely explain your methodology and progress for the aims you have investigated so far. Which parts were modified and which parts remained the same? **Normalise methods  scale to mean = 0 and variance = 1, PCA (variability, batch effect), cluster analysis, linear regression, logistic regression** • What R packages or other tools are you using for your analyses? You do not need to provide your scripts in your report. **Machine learning Logistic Regression Python (scikit-learn), prcomp (base R), hclust (base R), normalize (base R)**
+• Provide the links to any markdown reports within your repo to refer to the relevant analysis. • Provide references. **R/Python packages?**
+
+#### Results
+
+We sought to evaluate multiple variables concerning age, ethnicity, and batch against the gene expression data. We first ran a cluster analysis and PCA on Dataset 2. No clear clustering or correlation was found in the PCA between ASD gene expression and race/ethnicity. This was a first pass analysis of the data, and we will next focus on the age variable, both as continuously and categorically (0-5 years, 6-10 years, 11-15 years, 16-20 years). As such, we have not yet been able to answer our hypothesis. *Must still address these questions: Provide plots and/or tables to present your results. - List some challenges that you encountered? How will you address them?*
