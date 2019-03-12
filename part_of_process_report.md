@@ -3,20 +3,26 @@ process
 Yanchao
 2019-03-12
 
-Clean the data: 
+**Clean the data:**
+
 We kept all the initial information from two datasets. Then we converted age to a categorical variable which has three values: larger or equal to 5-year-old, smaller than 5-year-old, and no information. The two pre-processed GEO datasets were merged after filtering the data. The combined data and merged metadata could be found in the initial analysis RMD file.
 
-Normalization: 
+**Normalization:**
+
 We first took log2 transformation for both datasets. Since the scales of the two datasets are different, we decided that quantile normalization was appropriate for our data after considering a few normalization methods.
 
-Data exploration:
+**Data exploration:**
+
 We performed some graphs (histogram and density plot) to see the distribution of the merged data. We also assigned some values for missing data and made sure there is no missing value in the combined dataset. 
 
-Principal Component Analysis (PCA): 
+**Principal Component Analysis (PCA):**
+
 PCA was conducted on gene expression to identify the variability explained by factors available in the combined dataset. The first three principal components capture around 60% of the variability in our data. We also plotted the PC1 vs. PC2 for age, batch, and diagnosis separately. The results of these plots show that age, batch, and diagnosis are all not related to PC1 and PC2. 
 
-Hierarchical Clustering: 
+**Hierarchical Clustering:**
+
 The clustering method we applied was Average method, and our distance metric was “Euclidean”. We still want to find a way to validate our clustering result. 
 
-Linear regression:
+**Linear regression:**
+
 Linear regression was performed by using the “limma” package in R to identify the top differentially gene expression between control and autism cases. We identified 40 different genes, given a p-value cutoff of 0.1. Then we plotted the top 10 genes and used Hierarchical Clustering algorithms to cluster the top 40 genes that showed differential expression between control and autism cases.
