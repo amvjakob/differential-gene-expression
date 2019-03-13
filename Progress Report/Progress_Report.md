@@ -118,7 +118,9 @@ Specific packages required for the machine learning are: Python, NumPy, scikit-l
 
 **Statistical Analysis**
 
-We identified 40 different genes between control and autism cases (p-value cutoff = 0.01) by using the multiple linear regression. One of our hypotheses was that different gene expression would be detectable in comparing control and autism cases, concerning age and batch. Additionally, our PCA results show that age, diagnosis (control and autism) and batch are all not related to first two of the variability we are observing in our data. This was a first pass analysis of the data, and we will next focus on the age variable, categorically (<5 years, ≥ 5 years, and no age). An additional hypothesis to test will be that age is correlated with autism using logistical regression.     
+We identified 40 different genes between control and autism cases (p-value cutoff = 0.01) by using the multiple linear regression. One of our hypotheses was that different gene expression would be detectable in comparing control and autism cases, concerning age and batch. Additionally, our PCA results show that age, diagnosis (control and autism) and batch are all not related to first two of the variability we are observing in our data. This was a first pass analysis of the data, and we will next focus on the age variable, categorically (<5 years, ≥ 5 years, and no age). An additional hypothesis to test will be that age is correlated with autism using logistical regression. Then, we also apply some machine learning methods for this hypothesis.
+
+Preliminary results and figures could be found in the above intial analysis report.
 
 **Machine Learning**
 
