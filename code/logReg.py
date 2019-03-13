@@ -51,13 +51,38 @@ if __name__ == "__main__":  # always guard your multiprocessing code
     verbose = True
 
     X = load_dataset_np('data_X.npy')
-    X_ctrl = [[]] if not hasControl else load_dataset_np('data_X_control.npy')
-    X = np.append(X, X_ctrl, axis=0)
     dataset = load_dataset_pickle('data_y.pkl')
-    dataset_ctrl = {} if not hasControl else load_dataset_pickle('data_y_control.pkl')
-    y = dataset["y"] + ([] if not hasControl else dataset_ctrl["y"])
-    metadata = np.append(dataset["metadata"], [[]] if not hasControl else dataset_ctrl["metadata"])
-    genes = dataset["gene_names"]
+    y = dataset["y"]
+    metadata = dataset["metadata"]
+    genes = dataset["gene_names"]  
+
+    """
+    # caution: gene names might not match
+    if hasControl:
+        X_ctrl = load_dataset_np('data_X_control.npy')
+        dataset_ctrl = load_dataset_pickle('data_y_control.pkl')
+        genes_ctrl = dataset_ctrl["gene_names"] 
+
+        print(genes[100:110])
+        print(genes_ctrl[1000:1100])
+        
+        X_new = []
+        genes_new = []
+        for i in range(X_ctrl.shape[1]):
+            try:
+                idx = genes.index(genes_ctrl[i])
+                X_new.append(X[:,idx])
+                genes_new.append(genes[idx])
+            except:
+                # skip
+                continue
+
+        print(np.array(X_new).transpose().shape)
+        print(X_ctrl.shape)
+        X = np.append(np.array(X_new).transpose(), X_ctrl, axis=0)
+        y = y + dataset_ctrl["y"]
+        genes = genes_new
+    """
 
     # Remove lowly expressed genes
     X_new = []
@@ -107,7 +132,7 @@ if __name__ == "__main__":  # always guard your multiprocessing code
     best_nnz = 10000
     best_nnz_acc = 0
     best_nnz_genes = []
-    for i in range(nModels)
+    for i in range(nModels):
         if verbose: print("Iteration %d" % i)
 		
 		# Shuffle data
@@ -135,7 +160,7 @@ if __name__ == "__main__":  # always guard your multiprocessing code
 
     print("Best validation accuracy: %.3f with %d non-zeros" % (best_acc, best_acc_nnz))
     print("Best non-zeros: %d with validation accuracy %.3f" % (best_nnz, best_nnz_acc))
-
+    
     if best_acc_nnz < 100:
         dt = np.array(genes)[best_acc_genes]
         with open('best_genes_logReg_' + str(best_acc_nnz) + '_' + str(best_acc) + '.pkl', 'wb') as f:

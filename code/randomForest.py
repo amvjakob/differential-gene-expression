@@ -87,7 +87,7 @@ if __name__ == "__main__":  # always guard your multiprocessing code
     if verbose: print("Best C: %.3f" % C)
     """
 
-    split = 120
+    split = int(len(y)*7/10)
     Xtrain, ytrain = X[:split], y[:split]
     Xtest, ytest = X[split:], y[split:]
 

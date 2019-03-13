@@ -22,9 +22,14 @@ Different models were then trained using the data, the idea being to use a L1-pe
 ### RandomForestClassifier
 - 100 random trees with a maximal depth of 20
 
+## Results (so far)
+82.1% classification accuracy using 82 genes (SGDClassifier).
+96.6% classification accuracy using 40 genes (LogisticRegression). This result needs investigation.
+90.0% classification accuracy using 3949 genes (RandomForestClassifier). We need to train this model using already selected features.
+
 ## Next steps
+- Train model on merged datasets
 - Implement a pipeline that first selects "relevant" genes without removing lowly expressed genes and then fits a second model on top of it (e.g. random forest classifier that does not perform feature selection on its own).
 - Compare the selected genes across models and datasets (e.g. use one dataset to train and the other dataset to validate the model's accuracy).
 - Compare the genes selected by the models to the statistically relevant genes.
-
 
