@@ -33,4 +33,3 @@ Different models were then trained using the data, the idea being to use a L1-pe
 - Compare the selected genes across models and datasets (e.g. use one dataset to train and the other dataset to validate the model's accuracy).
 - Compare the genes selected by the models to the statistically relevant genes.
 
-
