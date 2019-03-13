@@ -70,6 +70,7 @@ Specific packages required by our project are: cluster, pvclust, xtable, limma, 
 [tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)   
 
 ## Results
-- #### What are your primary results? Were you able to answer your hypothesis? Did you have any positive results? If no, postulate a discussion as to why that may be. Provide plots and/or tables to present your results. - List some challenges that you encountered? How will you address them?
+
+#### What are your primary results? Were you able to answer your hypothesis? Did you have any positive results? If no, postulate a discussion as to why that may be. Provide plots and/or tables to present your results. - List some challenges that you encountered? How will you address them?
 
 We identified 40 different genes between control and autism cases (p-value cutoff = 0.01) by using the multiple linear regression. One of our hypotheses was that different gene expression would be detectable in comparing control and autism cases, concerning age and batch. Additionally, our PCA results show that age, diagnosis (control and autism) and batch are all not related to first two of the variability we are observing in our data. As PCA did not reveal a batch effect, which may reflect a lack of sensitivity in this test and require an alternative approach, such as *find*BATCH, part of the *explo*BATCH R package. This was a first pass analysis of the data, and we will next focus on the age variable, categorically (<5 years, ≥ 5 years, and no age). An additional hypothesis to test will be that age is correlated with autism using logistical regression.  
