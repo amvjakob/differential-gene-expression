@@ -51,7 +51,7 @@ Specific packages required by our project are: cluster, pvclust, xtable, limma, 
 
 - ### Provide the links to any markdown reports within your repo to refer to the relevant analysis.
 
-[Initial analysis](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/Initial_analysis.md)
+[Initial analysis](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/Progress%20Report/Initial_analysis.md)
 
 ### References
 
