@@ -3,8 +3,8 @@ process
 Yanchao
 2019-03-12
 
-### Since your initial proposal, you should have decided more concretely on what methods to use for each step of your analyses, and employed some of those methods.
-### Briefly and concisely explain your methodology and progress for the aims you have investigated so far. Which parts were modified and which parts remained the same?
+- ### Since your initial proposal, you should have decided more concretely on what methods to use for each step of your analyses, and employed some of those methods.
+- ### Briefly and concisely explain your methodology and progress for the aims you have investigated so far. Which parts were modified and which parts remained the same?
 
 #### The following are steps that have already been completed.
 
@@ -36,10 +36,10 @@ Linear regression was performed by using the “limma” package in R to identif
 
 
 
-### What R packages or other tools are you using for your analyses? You do not need to provide your scripts in your report.
+- ### What R packages or other tools are you using for your analyses? You do not need to provide your scripts in your report.
 
 Specific packages required by our project are: cluster, pvclust, xtable, limma, GEOquery, knitr, pheatmap, stringr, ggplot2,reshape2, tidyverse.
 
-### Provide the links to any markdown reports within your repo to refer to the relevant analysis.
+- ### Provide the links to any markdown reports within your repo to refer to the relevant analysis.
 
 [Initial analysis](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/Initial_analysis.md)
