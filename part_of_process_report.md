@@ -36,10 +36,10 @@ Linear regression was performed by using the “limma” package in R to identif
 
 
 
-### Provide the links to any markdown reports within your repo to refer to the relevant analysis.
+### What R packages or other tools are you using for your analyses? You do not need to provide your scripts in your report.
 
 Specific packages required by our project are: cluster, pvclust, xtable, limma, GEOquery, knitr, pheatmap, stringr, ggplot2,reshape2, tidyverse.
 
-### Provide references.
+### Provide the links to any markdown reports within your repo to refer to the relevant analysis.
 
 [Initial analysis](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/Initial_analysis.md)
