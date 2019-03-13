@@ -50,3 +50,4 @@ Result
 - ### What are your primary results? Were you able to answer your hypothesis? Did you have any positive results? If no, postulate a discussion as to why that may be. Provide plots and/or tables to present your results. - List some challenges that you encountered? How will you address them?
 
 We identified 40 different genes between between control and autism cases (p-value cutoff = 0.01) by using the multiple linear regression. one of our hypothesis was that different gene expression would be detectable in comparing control and autism cases. 
+Additionally, our PCA results show that age, diagnosis (control and autism) and batch are all not related to first two of the variability we are observing in our data. 
