@@ -10,7 +10,7 @@ Progess Report
 
 - ### What has changed based on the final proposal?
 
-Our datasets and analysis methods have remained the same as detailed in the project proposal. As an additional analysis, we will run cluster analysis and PCA on the full datasets, as well as the subsetted highest ranked genes from the application of machine learning (Python Logistic Regression). 
+Our datasets and analysis methods have mostly remained the same as detailed in the project proposal. The second dataset was subdivided into two seperate datasets, which were generated using different sequencing platforms in the study. No rubric was provided to successfully merge these datasets by IDs. For this reason, we selected the first of the two datasets (GSE25507), which uses the same ID references as our first dataset (GSE18123).  As an additional analysis, we will run cluster analysis and PCA on the full datasets, as well as the subsetted highest ranked genes from the application of machine learning (Python Logistic Regression). 
 
 - ### Task assignments
 
