@@ -55,17 +55,17 @@ Specific packages required by our project are: cluster, pvclust, xtable, limma, 
 
 ### References
 
-[cluster](https://cran.r-project.org/web/packages/cluster/cluster.pdf)
-[pvclust](https://cran.r-project.org/web/packages/pvclust/pvclust.pdf)
-[xtable](https://cran.r-project.org/web/packages/xtable/xtable.pdf)
-[limma](https://www.bioconductor.org/packages/devel/bioc/vignettes/limma/inst/doc/usersguide.pdf)
-[GEOquery](https://github.com/seandavi/GEOquery)
-[knitr](https://cran.r-project.org/web/packages/knitr/knitr.pdf)
-[pheatmap](https://cran.r-project.org/web/packages/pheatmap/pheatmap.pdf)
-[stringr](https://cran.r-project.org/web/packages/stringr/stringr.pdf)
-[ggplot2](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf)
-[reshape2](https://cran.r-project.org/web/packages/reshape2/reshape2.pdf)
-[tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)
+[cluster](https://cran.r-project.org/web/packages/cluster/cluster.pdf)   
+[pvclust](https://cran.r-project.org/web/packages/pvclust/pvclust.pdf)   
+[xtable](https://cran.r-project.org/web/packages/xtable/xtable.pdf)   
+[limma](https://www.bioconductor.org/packages/devel/bioc/vignettes/limma/inst/doc/usersguide.pdf)   
+[GEOquery](https://github.com/seandavi/GEOquery)   
+[knitr](https://cran.r-project.org/web/packages/knitr/knitr.pdf)   
+[pheatmap](https://cran.r-project.org/web/packages/pheatmap/pheatmap.pdf)   
+[stringr](https://cran.r-project.org/web/packages/stringr/stringr.pdf)     
+[ggplot2](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf)   
+[reshape2](https://cran.r-project.org/web/packages/reshape2/reshape2.pdf)   
+[tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)   
 
 ### Results
 - #### What are your primary results? Were you able to answer your hypothesis? Did you have any positive results? If no, postulate a discussion as to why that may be. Provide plots and/or tables to present your results. - List some challenges that you encountered? How will you address them?
