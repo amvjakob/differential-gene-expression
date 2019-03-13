@@ -53,6 +53,11 @@ Specific packages required by our project are: cluster, pvclust, xtable, limma, 
 
 [Initial analysis](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/Initial_analysis.md)
 
+### References
+
+[cluster](https://cran.r-project.org/web/packages/cluster/cluster.pdf))
+[pvclust]
+
 #### Results
 
-We sought to evaluate multiple variables concerning age, ethnicity, and batch against the gene expression data. We first ran a cluster analysis and PCA on Dataset 2. No clear clustering or correlation was found in the PCA between ASD gene expression and race/ethnicity. This was a first pass analysis of the data, and we will next focus on the age variable, both as continuously and categorically (0-5 years, 6-10 years, 11-15 years, 16-20 years). As such, we have not yet been able to answer our hypothesis. *Must still address these questions: Provide plots and/or tables to present your results. - List some challenges that you encountered? How will you address them?*
+We sought to evaluate multiple variables concerning age, ethnicity, and batch against the gene expression data. We first ran a cluster analysis and PCA on Dataset 2. No clear clustering or correlation was found in the PCA between ASD gene expression and race/ethnicity and batch. PCA did not reveal a batch effect, which may reflect a lack of sensitivity in this test and require an alternative approach, such as *find*BATCH, part of the *explo*BATCH R package. This was a first pass analysis of the data, and we will next focus on the age variable, categorically (<5 years, ≥ 5 years, and no age). As such, we have not yet been able to completely answer our hypothesis. 
