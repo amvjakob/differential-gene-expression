@@ -3,6 +3,11 @@ process
 Yanchao
 2019-03-12
 
+## Since your initial proposal, you should have decided more concretely on what methods to use for each step of your analyses, and employed some of those methods.
+## Briefly and concisely explain your methodology and progress for the aims you have investigated so far. Which parts were modified and which parts remained the same?
+
+#### The following are steps that have already been completed.
+
 **Clean the data:**
 
 We kept all the initial information from two datasets. Then we converted age to a categorical variable which has three values: larger or equal to 5-year-old, smaller than 5-year-old, and no information. The two pre-processed GEO datasets were merged after filtering the data. The combined data and merged metadata could be found in the initial analysis RMD file.
@@ -26,3 +31,15 @@ The clustering method we applied was Average method, and our distance metric was
 **Linear regression:**
 
 Linear regression was performed by using the “limma” package in R to identify the top differentially gene expression between control and autism cases. We identified 40 different genes, given a p-value cutoff of 0.1. Then we plotted the top 10 genes and used Hierarchical Clustering algorithms to cluster the top 40 genes that showed differential expression between control and autism cases.
+
+#### The following steps are still in progress.
+
+
+
+## Provide the links to any markdown reports within your repo to refer to the relevant analysis.
+
+Specific packages required by our project are: cluster, pvclust, xtable, limma, GEOquery, knitr, pheatmap, stringr, ggplot2,reshape2, tidyverse.
+
+## Provide references.
+
+[Initial analysis](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/Initial_analysis.md)
