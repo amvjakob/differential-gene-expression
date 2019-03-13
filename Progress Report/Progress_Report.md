@@ -3,17 +3,19 @@ Progess Report
 Virginia Pichler
 March 6, 2019
 
-- ### What has changed based on the final proposal?
 
+## What has changed based on the final proposal?
+
+### Did your dataset change? If so, why? Have you decided to do a different analysis than what was mentioned in your proposal? If so, Why?
 Our datasets and analysis methods have mostly remained the same as detailed in the project proposal. The second dataset was subdivided into two seperate datasets, which were generated using different sequencing platforms in the study. No rubric was provided to successfully merge these datasets by IDs. For this reason, we selected the first of the two datasets (GSE25507), which uses the same ID references as our first dataset (GSE18123).  As an additional analysis, we will run cluster analysis and PCA on the combined datasets(all data from GSE18123 and first part of data from GSE25507), as well as the subsetted highest ranked genes from the application of machine learning (Python Logistic Regression).  
 
-- ### Task assignments
+### Task assignments
 
 The tasks of each member will remain the same. Yanchao will clean and merge the datasets, test our hypothesis evaluating variables concerning age and batch in autistic individuals and controls and plot the results. Benson will focus on interpreting these results based on relevant and comparable data, comparing the statiscal methods used and variables impacting gene expression levels in autism. Anthony will apply a machine learning tool to extract highest-ranked genes associated with autism as a predictive model. Virginia will conduct a literature review for the basis of motivation in analysing global gene expression in individuals with autism, particularly focusing on associations with the variables. She will also review the methodologies used to generate the datasets as valid standards in the field of research. Lastly, she will be responsible for project planning and Github repo organisation. 
 
+## What is the progress of the analyses?
 
-- ### Since your initial proposal, you should have decided more concretely on what methods to use for each step of your analyses, and employed some of those methods.
-- ### Briefly and concisely explain your methodology and progress for the aims you have investigated so far. Which parts were modified and which parts remained the same?
+### Since your initial proposal, you should have decided more concretely on what methods to use for each step of your analyses, and employed some of those methods. Briefly and concisely explain your methodology and progress for the aims you have investigated so far. Which parts were modified and which parts remained the same?
 
 #### The following are steps that have already been completed.
 
@@ -45,11 +47,11 @@ Linear regression was performed by using the “limma” package in R to identif
 
 
 
-- ### What R packages or other tools are you using for your analyses? You do not need to provide your scripts in your report.
+### What R packages or other tools are you using for your analyses? You do not need to provide your scripts in your report.
 
 Specific packages required by our project are: cluster, pvclust, xtable, limma, GEOquery, knitr, pheatmap, stringr, ggplot2,reshape2, tidyverse.
 
-- ### Provide the links to any markdown reports within your repo to refer to the relevant analysis.
+### Provide the links to any markdown reports within your repo to refer to the relevant analysis.
 
 [Initial analysis](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/Progress%20Report/Initial_analysis.md)
 
@@ -67,7 +69,7 @@ Specific packages required by our project are: cluster, pvclust, xtable, limma, 
 [reshape2](https://cran.r-project.org/web/packages/reshape2/reshape2.pdf)   
 [tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)   
 
-### Results
+## Results
 - #### What are your primary results? Were you able to answer your hypothesis? Did you have any positive results? If no, postulate a discussion as to why that may be. Provide plots and/or tables to present your results. - List some challenges that you encountered? How will you address them?
 
 We identified 40 different genes between control and autism cases (p-value cutoff = 0.01) by using the multiple linear regression. One of our hypotheses was that different gene expression would be detectable in comparing control and autism cases, concerning age and batch. Additionally, our PCA results show that age, diagnosis (control and autism) and batch are all not related to first two of the variability we are observing in our data. As PCA did not reveal a batch effect, which may reflect a lack of sensitivity in this test and require an alternative approach, such as *find*BATCH, part of the *explo*BATCH R package. This was a first pass analysis of the data, and we will next focus on the age variable, categorically (<5 years, ≥ 5 years, and no age). An additional hypothesis to test will be that age is correlated with autism using logistical regression.  
