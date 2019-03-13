@@ -3,11 +3,11 @@ Progess Report
 Virginia Pichler
 March 6, 2019
 
-#### What has changed based on the final proposal?
+- ### What has changed based on the final proposal?
 
 Our datasets and analysis methods have remained the same as detailed in the project proposal. As an additional analysis, we will run cluster analysis and PCA on the full datasets, as well as the subsetted highest ranked genes from the application of machine learning (Python Logistic Regression). 
 
-### Task assignment
+- ### Task assignments
 
 The tasks of each member will remain the same. Yanchao will clean and merge the datasets, test our hypothesis evaluating variables concerning age, batch and ethnicity in autistic individuals and controls and plot the results. Benson will focus on interpreting these results based on relevant and comparable data, comparing the statiscal methods used and variables impacting gene expression levels in autism. Anthony will apply a machine learning tool to extract highest-ranked genes associated with autism as a predictive model. Virginia will conduct a literature review for the basis of motivation in analysing global gene expression in individuals with autism, particularly focusing on associations with the variables. She will also review the methodologies used to generate the datasets as valid standards in the field of research. Lastly, she will be responsible for project planning and Github repo organisation. 
 
