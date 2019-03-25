@@ -150,7 +150,7 @@ Load the data
 
     ## File stored at:
 
-    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//RtmpbuvqYN/GPL570.soft
+    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//Rtmp6nby3k/GPL570.soft
 
     ## GSE18123-GPL6244_series_matrix.txt.gz
 
@@ -163,7 +163,7 @@ Load the data
 
     ## File stored at:
 
-    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//RtmpbuvqYN/GPL6244.soft
+    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//Rtmp6nby3k/GPL6244.soft
 
 ``` r
 geo_GSE18123<- geo_GSE18123[[1]]
@@ -269,7 +269,7 @@ dim(meta_data_GSE18123)
 ``` r
 ## convert age to categorial variable
 F_meta_data_GSE18123<-meta_data_GSE18123 %>% dplyr::select(organism,sample_name,diagnosis,age,batch)
-F_meta_data_GSE18123$age<-ifelse(F_meta_data_GSE18123$age>= 5, "larger or equal to 5", ifelse(F_meta_data_GSE18123$age < 5,"Smaller than 5",  "error"))
+F_meta_data_GSE18123$age<-ifelse(F_meta_data_GSE18123$age>= 8, "larger or equal to 8", ifelse(F_meta_data_GSE18123$age < 8,"Smaller than 8",  "error"))
 F_meta_data_GSE18123$age[is.na(F_meta_data_GSE18123$age)] <- "None"
 ```
 
@@ -293,7 +293,7 @@ geo_GSE25507 <- getGEO("GSE25507", GSEMatrix = TRUE)
     ## See spec(...) for full column specifications.
 
     ## Using locally cached version of GPL570 found here:
-    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//RtmpbuvqYN/GPL570.soft
+    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//Rtmp6nby3k/GPL570.soft
 
 ``` r
 geo_GSE25507<- geo_GSE25507[[1]]
@@ -357,7 +357,7 @@ dim(meta_data_GSE25507)
 ``` r
 # convert age to categorial variable
 F_meta_data_GSE25507<-meta_data_GSE25507 %>% dplyr::select(organism,sample_name,diagnosis,age, batch)
-F_meta_data_GSE25507$age<-ifelse(F_meta_data_GSE25507$age >= 5, "larger or equal to 5", ifelse(F_meta_data_GSE25507$age < 5,"Smaller than 5",  "error"))
+F_meta_data_GSE25507$age<-ifelse(F_meta_data_GSE25507$age >= 8, "larger or equal to 8", ifelse(F_meta_data_GSE25507$age < 8,"Smaller than 8",  "error"))
 F_meta_data_GSE25507$age[is.na(F_meta_data_GSE25507$age)] <- "None"
 ```
 
@@ -407,7 +407,7 @@ system.time(combine_norm <- normalizeBetweenArrays(combine_matrix))
 ```
 
     ##    user  system elapsed 
-    ##   6.550   0.840   7.423
+    ##   6.568   0.839   7.434
 
 ``` r
 dat.geneMeans <- c(rowMeans(combine_norm[, 1:ncol(log_data_GSE18123)]), rowMeans(combine_norm[, ncol(log_data_GSE18123):ncol(combine_norm)])) 
@@ -430,6 +430,6 @@ Save the data to avoid future re-downloading
 
 ``` r
 #Saving normalized data seperately
-#saveRDS(combine_norm, file = "combine_norm.rds")
-#saveRDS(Meta_data, file = "Meta_data.rds")
+saveRDS(combine_norm, file = "combine_norm.rds")
+saveRDS(Meta_data, file = "Meta_data.rds")
 ```
