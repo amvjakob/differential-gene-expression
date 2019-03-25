@@ -1,7 +1,7 @@
 
 # Results ML
 
-The rationale behind using machine learning methods is to build a model that predicts PSD or not based on the gene expression profile of a patient. Training the model with an L1-penalty (penalize the use of more genes) induces that only "relevant" genes be included in the final model.
+The motivation behind using machine learning methods is to build a model that predicts PSD or not based on the gene expression profile of a patient. Training the model with an L1-penalty (penalize the use of more genes) induces that only "relevant" genes be included in the final model.
 
 In all following models, 70% of the samples were used for training and the remaining 30% were used to validate the model.
 
@@ -9,8 +9,12 @@ The second study contains two datasets: one was used to train the model, and one
 
 ## Logistic Regression (scikit-learn LogisticRegression)
 
+### Implementation details
+- 4-fold cross-validation using bootstrapping led to an optimal regularization constant C of 0.1 for L1-regularization.
+- Maximum 100 iterations to train the model
+
 ### Results
-Training on only the second dataset led to a model averaging 89% classification accuracy using only 40 genes. This model however performed poorly on the first dataset, averaging only 56% classification accuracy, and thus averages 66% classification accuracy on the combined datasets. This model clearly overfits the second dataset and is of little value for further investigations.
+Training on only the second dataset led to a model averaging 89% classification accuracy using only 40 genes. This model however performed poorly on the first dataset, averaging only 56% classification accuracy, and 66% on the combined datasets. This is a clear example of overfitting and thus the model is of little value for further investigations.
 
 Training on the combined datasets led to a model averaging 84% classification accuracy using only 50 genes. Training and validating on the first dataset only leads to a 73% classification accuracy, and 82% when only using the second dataset.
 
@@ -71,12 +75,13 @@ These 50 genes are:
 
 Further analysis: comparison with statistical results
 
-### Implementation details
-- 4-fold cross-validation using bootstrapping led to an optimal regularization constant C of 0.1 for L1-regularization.
-- Maximum 100 iterations to train the model
-
 
 ## Stochastic Gradient Descent (scikit-learn SGDClassifier)
+
+### Implementation details
+- Hinge loss and elastic net penalty, with a L1-to-L2-ratio of 0.9
+- 4-fold cross-validation using bootstrapping led to an optimal regularization constant C of 0.1 for elastic net regularization
+- Maximum 100 iterations of stochastic gradient descent
 
 ### Results
 Training on only one dataset proved difficult, as the model selected huge numbers of relevant genes (around 30'000) to compensate for the limited amount of samples.
@@ -128,11 +133,6 @@ These 39 genes are:
 |243283_at|
 |243720_at|
 |244505_at|
-
-### Implementation details
-- 4-fold cross-validation using bootstrapping led to an optimal regularization constant C of 0.1 for L1-regularization
-- Hinge loss and elastic net penalty, with a L1-to-L2-ratio of 0.9
-- Maximum 100 iterations of stochastic gradient descent
 
 ## Random Forest (scikit-learn RandomForestClassifier)
 
