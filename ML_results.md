@@ -86,6 +86,7 @@ Training on the combined datasets however led to a model averaging 75% classific
 Training a logistic regression model using only these 39 selected genes improved the average classification accuracy to 78%.
 
 These 39 genes are:
+
 | Name | 
 | ------------- |
 |1555707_at|
@@ -164,9 +165,10 @@ Restricting the depth of the trees, an average of 85% classification accuracy wa
 |238314_x_at|
 |240125_at|   
 
-Transfer to regular gene name
-Compare with statistical analysis
-Compare with ongoing research
-Statement about improving the paper's model
-No age or batch number as feature
+## TODO
+- Transfer to regular gene name
+- Compare with statistical analysis
+- Compare with ongoing research
+- Statement about improving the paper's model
+- No age or batch number as feature
 
