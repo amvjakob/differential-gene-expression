@@ -49,11 +49,12 @@ if __name__ == "__main__":  # always guard your multiprocessing code
 
     hasControl = True
     verbose = True
+    logData = True
 
     X = load_dataset_np('data_X.npy')
     dataset = load_dataset_pickle('data_y.pkl')
     y = dataset["y"]
-    metadata = dataset["metadata"]
+    metadata = np.array(dataset["metadata"])
     genes = dataset["gene_names"]  
 
     """
@@ -84,19 +85,20 @@ if __name__ == "__main__":  # always guard your multiprocessing code
         genes = genes_new
     """
 
-    # Remove lowly expressed genes
-    X_new = []
-    genes_new = []
-    for i in range(X.shape[1]):
-        if all(gene >= 150 for gene in X[:,i]):
-            X_new.append(X[:,i])
-            genes_new.append(genes[i])
+    if not logData:
+        # Remove lowly expressed genes
+        X_new = []
+        genes_new = []
+        for i in range(X.shape[1]):
+            if all(gene >= 150 for gene in X[:,i]):
+                X_new.append(X[:,i])
+                genes_new.append(genes[i])
+        
+        X = np.array(X_new).transpose()
+        genes = genes_new
 
-    X = np.array(X_new).transpose()
-    genes = genes_new
-
-    # Center and scale data
-    X = scale(X)
+        # Center and scale data
+        X = scale(X)
 
     if verbose: print("Shuffling")
     randomize = np.arange(len(y))
@@ -106,8 +108,8 @@ if __name__ == "__main__":  # always guard your multiprocessing code
 
     cores = max(mp.cpu_count() - 1, 1)  # ensure at least one process
     if verbose: print("Running on %i cores" % cores)
-    C = 0.01
-    with mp.Pool(processes=cores) as pool:
+    C = 0.1
+    """with mp.Pool(processes=cores) as pool:
         Cs = [pool.apply_async(cross_validate_async, (X, y, 10 ** c,)) for c in range(-3, 3)]
         results = [result.get() for result in Cs]
 
@@ -116,6 +118,7 @@ if __name__ == "__main__":  # always guard your multiprocessing code
             if result['error'] < best_err:
                 best_err = result['error']
                 C = result['C']
+                """
 
 
     if verbose: print("Best C: %.3f" % C)
@@ -135,7 +138,7 @@ if __name__ == "__main__":  # always guard your multiprocessing code
     for i in range(nModels):
         if verbose: print("Iteration %d" % i)
 		
-		# Shuffle data
+	# Shuffle data
         randomize = np.arange(len(y))
         # 12 np.random.seed(i)
         np.random.shuffle(randomize)

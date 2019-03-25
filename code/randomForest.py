@@ -48,19 +48,24 @@ if __name__ == "__main__":  # always guard your multiprocessing code
 
     X = load_dataset_np('data_X.npy')
     dataset = load_dataset_pickle('data_y.pkl')
-    y, metadata, gene_names = dataset["y"], dataset["metadata"], dataset["gene_names"]
+    y, metadata, gene_names = dataset["y"], np.array(dataset["metadata"]), dataset["gene_names"]
     verbose = True
+    logData = True
 
-    # Remove lowly expressed genes
-    X_new = []
-    for i in range(X.shape[1]):
-        if all(gene >= 150 for gene in X[:,i]):
-            X_new.append(X[:,i])
+    if not logData:
+        # Remove lowly expressed genes
+        X_new = []
+        genes_new = []
+        for i in range(X.shape[1]):
+            if all(gene >= 150 for gene in X[:,i]):
+                X_new.append(X[:,i])
+                genes_new.append(genes[i])
+        
+        X = np.array(X_new).transpose()
+        genes = genes_new
 
-    X = np.array(X_new).transpose()
-
-    # Center and scale data
-    X = scale(X)
+        # Center and scale data
+        X = scale(X)
 
     if verbose: print("Shuffling... ", end='')
     randomize = np.arange(len(y))
