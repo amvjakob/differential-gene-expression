@@ -237,19 +237,3 @@ geneC_hc_a <- hclust(geneC_dis, method = "average")
 plot(geneC_hc_a, labels = FALSE, main = "Hierarchical with Average Linkage", xlab = "")
 ```
 
-## Carry out tests of Normality 
-
-
-```{r}
-CGI_Data_Loc = paste(substr(getwd(), 1, nchar(getwd())-4),"Data/M_CGI_data.RDS", sep="")
-
-m_val_CGI <- readRDS(CGI_Data_Loc)
-x <- m_val_CGI[3, ] %>% as.matrix()
-qqnorm(x) #Data looks pretty normally distributed
-```
-
-```{r}
-#Look at the data 
-x <- spr_Dat %>% as.matrix()
-qqnorm(x) #Data looks pretty normally distributed
-```
