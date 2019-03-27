@@ -105,13 +105,13 @@ library(reshape2)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ─────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ tibble  2.0.1     ✔ readr   1.3.1
     ## ✔ tidyr   0.8.3     ✔ purrr   0.3.1
     ## ✔ tibble  2.0.1     ✔ forcats 0.4.0
 
-    ## ── Conflicts ────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::arrange()    masks plyr::arrange()
     ## ✖ dplyr::combine()    masks Biobase::combine(), BiocGenerics::combine()
     ## ✖ purrr::compact()    masks plyr::compact()
@@ -126,6 +126,10 @@ library(tidyverse)
     ## ✖ dplyr::rename()     masks plyr::rename()
     ## ✖ dplyr::summarise()  masks plyr::summarise()
     ## ✖ dplyr::summarize()  masks plyr::summarize()
+
+``` r
+library(nortest)
+```
 
 Load the data
 -------------
@@ -584,3 +588,38 @@ plot(geneC_hc_a, labels = FALSE, main = "Hierarchical with Average Linkage", xla
 ```
 
 ![](exploratory_and_Limma_analysis_files/figure-markdown_github/unnamed-chunk-23-1.png)
+
+Carry out tests of Normality for the residual
+---------------------------------------------
+
+Here we test if the residual are normally distributed. Our null hypothesis is that all the rows of the residual matrix are normally distributed. Our alternative is that they are not.
+
+To perform this check we use two tests, we use the Anderson-Darling and the Shapiro-Wilks test. We us a bonferroni correction on the significance threshold to control the number of false positives.
+
+``` r
+residual <- residuals.MArrayLM(object=ds_Fit, y=spr_Dat) 
+ad_test_pval <- c()
+sw_test_pval <- c()
+#for loop to go through all 54613 residual
+for(i in 1:nrow(residual)) {
+  x <- residual[i, ] %>% as.matrix()
+  ad_test_pval <- c(ad_test_pval, ad.test(x)$p.value)
+  sw_test_pval <- c(sw_test_pval, shapiro.test(x)$p.value)
+}
+```
+
+``` r
+# Use bonferroni correction to adjust for multiple hypothesis testing
+b <- 0.05/nrow(residual) #Bonferroni adjusted threshold is 9.155329e-07
+length(which(ad_test_pval > b))/nrow(residual)
+```
+
+    ## [1] 0.6690715
+
+``` r
+length(which(sw_test_pval > b))/nrow(residual)
+```
+
+    ## [1] 0.6187355
+
+The two methods suggests that over 62% of rows have p values larger than the critical threshold. We summarize that the residuals of the fitted model are approximately normal distribution.
