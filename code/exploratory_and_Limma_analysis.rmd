@@ -34,7 +34,7 @@ Meta_data<- readRDS("Meta_data.rds")
 
 ## Plotting gene expression
 
-```{r}
+```{r,warning=FALSE}
 # melt into a format ggplot can easily work with
 combine_norm2<-as.data.frame(combine_norm) %>% rownames_to_column("gene")
 meltedExpressionMatrix <- combine_norm2 %>% melt(id = "gene") 
@@ -47,7 +47,7 @@ meltedExpressionMatrix %>% filter(variable==head_variable) %>%
 ```
 
 By looking at the first 8 samples, it shows that the distribution of the sample are similar. 
-```{r}
+```{r,warning=FALSE}
 meltedExpressionMatrix %>% filter(variable==head_variable) %>% 
   ggplot(aes(x = value, color = variable)) +
   geom_density() +
@@ -151,18 +151,19 @@ pr.hc.a <- hclust(pr.dis, method = "average")
 # plot them
 plot(pr.hc.a, labels = FALSE, main = "Average", xlab = "")
 ```
-```{r}
+```{r,width=20}
 # set pheatmap clustering parameters
 clust_dist_col = "euclidean"  #‘'correlation'’ for Pearson correlation, ‘'euclidean'’, ‘'maximum'’, ‘'manhattan'’, ‘'canberra'’, ‘'binary'’ or ‘'minkowski'’
 clust_method = "average"  #‘'ward.D'’, ‘'ward.D2'’,‘'single'’, ‘'complete'’, ‘'average'’ (= UPGMA), ‘'mcquitty'’ (= WPGMA), ‘'median'’ (= WPGMC) or ‘'centroid'’ (= UPGMC)
 clust_scale = "none"  #'column', 'none', 'row'
-
+annotation1<-as.data.frame(Meta_data[,c("diagnosis", "age","batch")])
 ## the annotation option uses the covariate object (prDes) we defined. It should
 ## have the same rownames, as the colnames in our data object (data_to_plot).
 
 pheatmap(data_to_plot, cluster_rows = FALSE, scale = clust_scale, clustering_method = clust_method, 
     clustering_distance_cols = clust_dist_col, show_colnames =FALSE, show_rownames = FALSE, 
-    main = "Clustering heatmap for combine data", annotation = Meta_data[,c("diagnosis", "age","batch")])
+    main = "Clustering heatmap for combine data", annotation = annotation1)
+
 ```
 
 ## Limma
@@ -222,7 +223,7 @@ ggplot(data=topGenes_ExpressionData, aes(x=diagnosis, y=expression, col=age))+
 ```
 
 
-We start by using clustering algorithms to cluster the top 40 genes that showed differential expression across the different diagnosis stage (BH adjusted p value < 0.1).
+We start by using clustering algorithms to cluster the top 15 genes that showed differential expression across the different diagnosis stage (BH adjusted p value < 0.1).
 ```{r}
 pheatmap(top_Dat, cluster_rows = TRUE, scale = "none", clustering_method = "average", 
     clustering_distance_cols = "euclidean", clustering_distance_rows = "euclidean", 
@@ -237,3 +238,4 @@ geneC_hc_a <- hclust(geneC_dis, method = "average")
 plot(geneC_hc_a, labels = FALSE, main = "Hierarchical with Average Linkage", xlab = "")
 ```
 
+##

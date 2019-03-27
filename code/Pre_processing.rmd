@@ -23,6 +23,8 @@ library(ggplot2)
 library(dplyr)
 library(reshape2)
 library(tidyverse)
+library(mice)
+library(VIM)
 ```
 
 ## Load the data
@@ -75,14 +77,6 @@ kable(head(meta_data_GSE18123))
 dim(meta_data_GSE18123)
 ```
 
-
-```{r}
-## convert age to categorial variable
-F_meta_data_GSE18123<-meta_data_GSE18123 %>% dplyr::select(organism,sample_name,diagnosis,age,batch)
-F_meta_data_GSE18123$age<-ifelse(F_meta_data_GSE18123$age>= 8, "larger or equal to 8", ifelse(F_meta_data_GSE18123$age < 8,"Smaller than 8",  "error"))
-F_meta_data_GSE18123$age[is.na(F_meta_data_GSE18123$age)] <- "None"
-```
-
 ### geo_GSE25507 data
 ```{r,warning=FALSE}
 # 
@@ -112,7 +106,7 @@ meta_data_GSE25507<-prDes_GSE25507[,1:5]
 colnames(meta_data_GSE25507) = c("organism","sample_name","batch","diagnosis","age")
 meta_data_GSE25507$diagnosis = as.factor(gsub("diagnosis: ","", meta_data_GSE25507$diagnosis))
 
-meta_data_GSE25507$agee = gsub("age: ","", meta_data_GSE25507$age)
+meta_data_GSE25507$age = gsub("age: ","", meta_data_GSE25507$age)
 
 meta_data_GSE25507$age<-as.integer(str_extract(meta_data_GSE25507$age, "[0-9]{1}"))
 meta_data_GSE25507$diagnosis<-ifelse(meta_data_GSE25507$diagnosis == "group: control", "CONTROL", ifelse(meta_data_GSE25507$diagnosis == "group: autism", "AUTISM", "error"))
@@ -125,15 +119,25 @@ dim(meta_data_GSE25507)
 
 ```
 
+## Imputing the missing data by multiple imputation
 ```{r}
-# convert age to categorial variable
-F_meta_data_GSE25507<-meta_data_GSE25507 %>% dplyr::select(organism,sample_name,diagnosis,age, batch)
-F_meta_data_GSE25507$age<-ifelse(F_meta_data_GSE25507$age >= 8, "larger or equal to 8", ifelse(F_meta_data_GSE25507$age < 8,"Smaller than 8",  "error"))
-F_meta_data_GSE25507$age[is.na(F_meta_data_GSE25507$age)] <- "None"
+## identify how many NA in the data
+sum(is.na(meta_data_GSE25507$age))
 ```
+
+```{r}
+set.seed(2019)
+imputed_Data <- mice(meta_data_GSE25507, m=5, maxit = 50, method = 'pmm', seed = 500)
+## We use the third iteration:
+meta_data_GSE25507_2 <- complete(imputed_Data, 3)
+rownames(meta_data_GSE25507_2) <- rownames(meta_data_GSE25507)
+```
+
 
 ### Combine two meta data
 ```{r}
+F_meta_data_GSE18123<-meta_data_GSE18123 %>% dplyr::select(organism,sample_name,diagnosis,age, batch)
+F_meta_data_GSE25507<-meta_data_GSE25507_2 %>% dplyr::select(organism,sample_name,diagnosis,age, batch)
 ## Combine two meta data
 Meta_data = rbind(F_meta_data_GSE18123, F_meta_data_GSE25507)
 ```
@@ -184,6 +188,8 @@ plotDat2 <- data.frame(mean_gene = dat.geneMeans,
 
 ## Save the data to avoid future re-downloading
 ```{r}
+Meta_data$diagnosis<- Meta_data$diagnosis %>% factor(levels = c("AUTISM", "CONTROL"))
+Meta_data$batch<- Meta_data$batch %>% factor(levels = c("none", "batch 1","batch 2"))
 #Saving normalized data seperately
 saveRDS(combine_norm, file = "combine_norm.rds")
 saveRDS(Meta_data, file = "Meta_data.rds")

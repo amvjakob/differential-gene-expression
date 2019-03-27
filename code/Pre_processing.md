@@ -127,6 +127,68 @@ library(tidyverse)
     ## ✖ dplyr::summarise()  masks plyr::summarise()
     ## ✖ dplyr::summarize()  masks plyr::summarize()
 
+``` r
+library(mice)
+```
+
+    ## 
+    ## Attaching package: 'mice'
+
+    ## The following object is masked from 'package:tidyr':
+    ## 
+    ##     complete
+
+    ## The following objects are masked from 'package:BiocGenerics':
+    ## 
+    ##     cbind, rbind
+
+    ## The following object is masked from 'package:RCurl':
+    ## 
+    ##     complete
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     cbind, rbind
+
+``` r
+library(VIM)
+```
+
+    ## Loading required package: colorspace
+
+    ## Loading required package: grid
+
+    ## Loading required package: data.table
+
+    ## 
+    ## Attaching package: 'data.table'
+
+    ## The following object is masked from 'package:purrr':
+    ## 
+    ##     transpose
+
+    ## The following objects are masked from 'package:reshape2':
+    ## 
+    ##     dcast, melt
+
+    ## The following objects are masked from 'package:dplyr':
+    ## 
+    ##     between, first, last
+
+    ## VIM is ready to use. 
+    ##  Since version 4.0.0 the GUI is in its own package VIMGUI.
+    ## 
+    ##           Please use the package to use the new (and old) GUI.
+
+    ## Suggestions and bug-reports can be submitted at: https://github.com/alexkowa/VIM/issues
+
+    ## 
+    ## Attaching package: 'VIM'
+
+    ## The following object is masked from 'package:datasets':
+    ## 
+    ##     sleep
+
 Load the data
 -------------
 
@@ -150,7 +212,7 @@ Load the data
 
     ## File stored at:
 
-    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//Rtmp6nby3k/GPL570.soft
+    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//Rtmpke95ZW/GPL570.soft
 
     ## GSE18123-GPL6244_series_matrix.txt.gz
 
@@ -163,7 +225,7 @@ Load the data
 
     ## File stored at:
 
-    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//Rtmp6nby3k/GPL6244.soft
+    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//Rtmpke95ZW/GPL6244.soft
 
 ``` r
 geo_GSE18123<- geo_GSE18123[[1]]
@@ -266,13 +328,6 @@ dim(meta_data_GSE18123)
 
     ## [1] 99  6
 
-``` r
-## convert age to categorial variable
-F_meta_data_GSE18123<-meta_data_GSE18123 %>% dplyr::select(organism,sample_name,diagnosis,age,batch)
-F_meta_data_GSE18123$age<-ifelse(F_meta_data_GSE18123$age>= 8, "larger or equal to 8", ifelse(F_meta_data_GSE18123$age < 8,"Smaller than 8",  "error"))
-F_meta_data_GSE18123$age[is.na(F_meta_data_GSE18123$age)] <- "None"
-```
-
 ### geo\_GSE25507 data
 
 ``` r
@@ -293,7 +348,7 @@ geo_GSE25507 <- getGEO("GSE25507", GSEMatrix = TRUE)
     ## See spec(...) for full column specifications.
 
     ## Using locally cached version of GPL570 found here:
-    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//Rtmp6nby3k/GPL570.soft
+    ## /var/folders/ym/nv8j72n54cqb51_bvr34n90m0000gn/T//Rtmpke95ZW/GPL570.soft
 
 ``` r
 geo_GSE25507<- geo_GSE25507[[1]]
@@ -307,7 +362,7 @@ data_GSE25507<-exprs(geo_GSE25507)
 hist(data_GSE25507, col = "gray", main = "GSE25507 - Histogram")
 ```
 
-![](Pre_processing_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](Pre_processing_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 It appears a lot of genes have values &lt; 1000.
 
@@ -315,7 +370,7 @@ It appears a lot of genes have values &lt; 1000.
 hist(log2(data_GSE25507 + 1), col = "gray", main = "GSE25507 log transformed - Histogram")
 ```
 
-![](Pre_processing_files/figure-markdown_github/unnamed-chunk-10-1.png)
+![](Pre_processing_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 ``` r
 log_data_GSE25507<-log2(data_GSE25507 + 1)
@@ -331,7 +386,7 @@ meta_data_GSE25507<-prDes_GSE25507[,1:5]
 colnames(meta_data_GSE25507) = c("organism","sample_name","batch","diagnosis","age")
 meta_data_GSE25507$diagnosis = as.factor(gsub("diagnosis: ","", meta_data_GSE25507$diagnosis))
 
-meta_data_GSE25507$agee = gsub("age: ","", meta_data_GSE25507$age)
+meta_data_GSE25507$age = gsub("age: ","", meta_data_GSE25507$age)
 
 meta_data_GSE25507$age<-as.integer(str_extract(meta_data_GSE25507$age, "[0-9]{1}"))
 meta_data_GSE25507$diagnosis<-ifelse(meta_data_GSE25507$diagnosis == "group: control", "CONTROL", ifelse(meta_data_GSE25507$diagnosis == "group: autism", "AUTISM", "error"))
@@ -339,31 +394,302 @@ meta_data_GSE25507$batch<-ifelse(meta_data_GSE25507$batch == "scan batch: Batch 
 kable(head(meta_data_GSE25507))
 ```
 
-|           | organism     | sample\_name | batch   | diagnosis |  age| agee      |
-|-----------|:-------------|:-------------|:--------|:----------|----:|:----------|
-| GSM627071 | Homo sapiens | 0118-01-C    | batch 1 | CONTROL   |    8| subject 8 |
-| GSM627072 | Homo sapiens | 0120-01-C    | batch 1 | CONTROL   |    5| subject 5 |
-| GSM627073 | Homo sapiens | 0137-01-C    | batch 1 | CONTROL   |    8| subject 8 |
-| GSM627074 | Homo sapiens | 0147-01-C    | batch 2 | CONTROL   |    7| subject 7 |
-| GSM627075 | Homo sapiens | 0148-01-C    | batch 2 | CONTROL   |    4| subject 4 |
-| GSM627076 | Homo sapiens | 0152-01-C    | batch 2 | CONTROL   |    5| subject 5 |
+|           | organism     | sample\_name | batch   | diagnosis |  age|
+|-----------|:-------------|:-------------|:--------|:----------|----:|
+| GSM627071 | Homo sapiens | 0118-01-C    | batch 1 | CONTROL   |    8|
+| GSM627072 | Homo sapiens | 0120-01-C    | batch 1 | CONTROL   |    5|
+| GSM627073 | Homo sapiens | 0137-01-C    | batch 1 | CONTROL   |    8|
+| GSM627074 | Homo sapiens | 0147-01-C    | batch 2 | CONTROL   |    7|
+| GSM627075 | Homo sapiens | 0148-01-C    | batch 2 | CONTROL   |    4|
+| GSM627076 | Homo sapiens | 0152-01-C    | batch 2 | CONTROL   |    5|
 
 ``` r
 dim(meta_data_GSE25507)
 ```
 
-    ## [1] 146   6
+    ## [1] 146   5
+
+Imputing the missing data by multiple imputation
+------------------------------------------------
 
 ``` r
-# convert age to categorial variable
-F_meta_data_GSE25507<-meta_data_GSE25507 %>% dplyr::select(organism,sample_name,diagnosis,age, batch)
-F_meta_data_GSE25507$age<-ifelse(F_meta_data_GSE25507$age >= 8, "larger or equal to 8", ifelse(F_meta_data_GSE25507$age < 8,"Smaller than 8",  "error"))
-F_meta_data_GSE25507$age[is.na(F_meta_data_GSE25507$age)] <- "None"
+## identify how many NA in the data
+sum(is.na(meta_data_GSE25507$age))
+```
+
+    ## [1] 12
+
+``` r
+set.seed(2019)
+imputed_Data <- mice(meta_data_GSE25507, m=5, maxit = 50, method = 'pmm', seed = 500)
+```
+
+    ## 
+    ##  iter imp variable
+    ##   1   1  age
+    ##   1   2  age
+    ##   1   3  age
+    ##   1   4  age
+    ##   1   5  age
+    ##   2   1  age
+    ##   2   2  age
+    ##   2   3  age
+    ##   2   4  age
+    ##   2   5  age
+    ##   3   1  age
+    ##   3   2  age
+    ##   3   3  age
+    ##   3   4  age
+    ##   3   5  age
+    ##   4   1  age
+    ##   4   2  age
+    ##   4   3  age
+    ##   4   4  age
+    ##   4   5  age
+    ##   5   1  age
+    ##   5   2  age
+    ##   5   3  age
+    ##   5   4  age
+    ##   5   5  age
+    ##   6   1  age
+    ##   6   2  age
+    ##   6   3  age
+    ##   6   4  age
+    ##   6   5  age
+    ##   7   1  age
+    ##   7   2  age
+    ##   7   3  age
+    ##   7   4  age
+    ##   7   5  age
+    ##   8   1  age
+    ##   8   2  age
+    ##   8   3  age
+    ##   8   4  age
+    ##   8   5  age
+    ##   9   1  age
+    ##   9   2  age
+    ##   9   3  age
+    ##   9   4  age
+    ##   9   5  age
+    ##   10   1  age
+    ##   10   2  age
+    ##   10   3  age
+    ##   10   4  age
+    ##   10   5  age
+    ##   11   1  age
+    ##   11   2  age
+    ##   11   3  age
+    ##   11   4  age
+    ##   11   5  age
+    ##   12   1  age
+    ##   12   2  age
+    ##   12   3  age
+    ##   12   4  age
+    ##   12   5  age
+    ##   13   1  age
+    ##   13   2  age
+    ##   13   3  age
+    ##   13   4  age
+    ##   13   5  age
+    ##   14   1  age
+    ##   14   2  age
+    ##   14   3  age
+    ##   14   4  age
+    ##   14   5  age
+    ##   15   1  age
+    ##   15   2  age
+    ##   15   3  age
+    ##   15   4  age
+    ##   15   5  age
+    ##   16   1  age
+    ##   16   2  age
+    ##   16   3  age
+    ##   16   4  age
+    ##   16   5  age
+    ##   17   1  age
+    ##   17   2  age
+    ##   17   3  age
+    ##   17   4  age
+    ##   17   5  age
+    ##   18   1  age
+    ##   18   2  age
+    ##   18   3  age
+    ##   18   4  age
+    ##   18   5  age
+    ##   19   1  age
+    ##   19   2  age
+    ##   19   3  age
+    ##   19   4  age
+    ##   19   5  age
+    ##   20   1  age
+    ##   20   2  age
+    ##   20   3  age
+    ##   20   4  age
+    ##   20   5  age
+    ##   21   1  age
+    ##   21   2  age
+    ##   21   3  age
+    ##   21   4  age
+    ##   21   5  age
+    ##   22   1  age
+    ##   22   2  age
+    ##   22   3  age
+    ##   22   4  age
+    ##   22   5  age
+    ##   23   1  age
+    ##   23   2  age
+    ##   23   3  age
+    ##   23   4  age
+    ##   23   5  age
+    ##   24   1  age
+    ##   24   2  age
+    ##   24   3  age
+    ##   24   4  age
+    ##   24   5  age
+    ##   25   1  age
+    ##   25   2  age
+    ##   25   3  age
+    ##   25   4  age
+    ##   25   5  age
+    ##   26   1  age
+    ##   26   2  age
+    ##   26   3  age
+    ##   26   4  age
+    ##   26   5  age
+    ##   27   1  age
+    ##   27   2  age
+    ##   27   3  age
+    ##   27   4  age
+    ##   27   5  age
+    ##   28   1  age
+    ##   28   2  age
+    ##   28   3  age
+    ##   28   4  age
+    ##   28   5  age
+    ##   29   1  age
+    ##   29   2  age
+    ##   29   3  age
+    ##   29   4  age
+    ##   29   5  age
+    ##   30   1  age
+    ##   30   2  age
+    ##   30   3  age
+    ##   30   4  age
+    ##   30   5  age
+    ##   31   1  age
+    ##   31   2  age
+    ##   31   3  age
+    ##   31   4  age
+    ##   31   5  age
+    ##   32   1  age
+    ##   32   2  age
+    ##   32   3  age
+    ##   32   4  age
+    ##   32   5  age
+    ##   33   1  age
+    ##   33   2  age
+    ##   33   3  age
+    ##   33   4  age
+    ##   33   5  age
+    ##   34   1  age
+    ##   34   2  age
+    ##   34   3  age
+    ##   34   4  age
+    ##   34   5  age
+    ##   35   1  age
+    ##   35   2  age
+    ##   35   3  age
+    ##   35   4  age
+    ##   35   5  age
+    ##   36   1  age
+    ##   36   2  age
+    ##   36   3  age
+    ##   36   4  age
+    ##   36   5  age
+    ##   37   1  age
+    ##   37   2  age
+    ##   37   3  age
+    ##   37   4  age
+    ##   37   5  age
+    ##   38   1  age
+    ##   38   2  age
+    ##   38   3  age
+    ##   38   4  age
+    ##   38   5  age
+    ##   39   1  age
+    ##   39   2  age
+    ##   39   3  age
+    ##   39   4  age
+    ##   39   5  age
+    ##   40   1  age
+    ##   40   2  age
+    ##   40   3  age
+    ##   40   4  age
+    ##   40   5  age
+    ##   41   1  age
+    ##   41   2  age
+    ##   41   3  age
+    ##   41   4  age
+    ##   41   5  age
+    ##   42   1  age
+    ##   42   2  age
+    ##   42   3  age
+    ##   42   4  age
+    ##   42   5  age
+    ##   43   1  age
+    ##   43   2  age
+    ##   43   3  age
+    ##   43   4  age
+    ##   43   5  age
+    ##   44   1  age
+    ##   44   2  age
+    ##   44   3  age
+    ##   44   4  age
+    ##   44   5  age
+    ##   45   1  age
+    ##   45   2  age
+    ##   45   3  age
+    ##   45   4  age
+    ##   45   5  age
+    ##   46   1  age
+    ##   46   2  age
+    ##   46   3  age
+    ##   46   4  age
+    ##   46   5  age
+    ##   47   1  age
+    ##   47   2  age
+    ##   47   3  age
+    ##   47   4  age
+    ##   47   5  age
+    ##   48   1  age
+    ##   48   2  age
+    ##   48   3  age
+    ##   48   4  age
+    ##   48   5  age
+    ##   49   1  age
+    ##   49   2  age
+    ##   49   3  age
+    ##   49   4  age
+    ##   49   5  age
+    ##   50   1  age
+    ##   50   2  age
+    ##   50   3  age
+    ##   50   4  age
+    ##   50   5  age
+
+    ## Warning: Number of logged events: 258
+
+``` r
+## We use the third iteration:
+meta_data_GSE25507_2 <- complete(imputed_Data, 3)
+rownames(meta_data_GSE25507_2) <- rownames(meta_data_GSE25507)
 ```
 
 ### Combine two meta data
 
 ``` r
+F_meta_data_GSE18123<-meta_data_GSE18123 %>% dplyr::select(organism,sample_name,diagnosis,age, batch)
+F_meta_data_GSE25507<-meta_data_GSE25507_2 %>% dplyr::select(organism,sample_name,diagnosis,age, batch)
 ## Combine two meta data
 Meta_data = rbind(F_meta_data_GSE18123, F_meta_data_GSE25507)
 ```
@@ -407,7 +733,7 @@ system.time(combine_norm <- normalizeBetweenArrays(combine_matrix))
 ```
 
     ##    user  system elapsed 
-    ##   6.568   0.839   7.434
+    ##   6.790   0.856   7.667
 
 ``` r
 dat.geneMeans <- c(rowMeans(combine_norm[, 1:ncol(log_data_GSE18123)]), rowMeans(combine_norm[, ncol(log_data_GSE18123):ncol(combine_norm)])) 
@@ -429,6 +755,8 @@ Save the data to avoid future re-downloading
 --------------------------------------------
 
 ``` r
+Meta_data$diagnosis<- Meta_data$diagnosis %>% factor(levels = c("AUTISM", "CONTROL"))
+Meta_data$batch<- Meta_data$batch %>% factor(levels = c("none", "batch 1","batch 2"))
 #Saving normalized data seperately
 saveRDS(combine_norm, file = "combine_norm.rds")
 saveRDS(Meta_data, file = "Meta_data.rds")

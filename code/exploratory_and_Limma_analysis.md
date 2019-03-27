@@ -150,12 +150,6 @@ meltedExpressionMatrix %>% filter(variable==head_variable) %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+theme_bw()
 ```
 
-    ## Warning in `==.default`(variable, head_variable): longer object length is
-    ## not a multiple of shorter object length
-
-    ## Warning in is.na(e1) | is.na(e2): longer object length is not a multiple of
-    ## shorter object length
-
 ![](exploratory_and_Limma_analysis_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 By looking at the first 8 samples, it shows that the distribution of the sample are similar.
@@ -166,12 +160,6 @@ meltedExpressionMatrix %>% filter(variable==head_variable) %>%
   geom_density() +
   theme_bw()
 ```
-
-    ## Warning in `==.default`(variable, head_variable): longer object length is
-    ## not a multiple of shorter object length
-
-    ## Warning in is.na(e1) | is.na(e2): longer object length is not a multiple of
-    ## shorter object length
 
 ![](exploratory_and_Limma_analysis_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
@@ -466,13 +454,13 @@ plot(pr.hc.a, labels = FALSE, main = "Average", xlab = "")
 clust_dist_col = "euclidean"  #‘'correlation'’ for Pearson correlation, ‘'euclidean'’, ‘'maximum'’, ‘'manhattan'’, ‘'canberra'’, ‘'binary'’ or ‘'minkowski'’
 clust_method = "average"  #‘'ward.D'’, ‘'ward.D2'’,‘'single'’, ‘'complete'’, ‘'average'’ (= UPGMA), ‘'mcquitty'’ (= WPGMA), ‘'median'’ (= WPGMC) or ‘'centroid'’ (= UPGMC)
 clust_scale = "none"  #'column', 'none', 'row'
-
+annotation1<-as.data.frame(Meta_data[,c("diagnosis", "age","batch")])
 ## the annotation option uses the covariate object (prDes) we defined. It should
 ## have the same rownames, as the colnames in our data object (data_to_plot).
 
 pheatmap(data_to_plot, cluster_rows = FALSE, scale = clust_scale, clustering_method = clust_method, 
     clustering_distance_cols = clust_dist_col, show_colnames =FALSE, show_rownames = FALSE, 
-    main = "Clustering heatmap for combine data", annotation = Meta_data[,c("diagnosis", "age","batch")])
+    main = "Clustering heatmap for combine data", annotation = annotation1)
 ```
 
 ![](exploratory_and_Limma_analysis_files/figure-markdown_github/unnamed-chunk-18-1.png)
@@ -577,7 +565,7 @@ ggplot(data=topGenes_ExpressionData, aes(x=diagnosis, y=expression, col=age))+
 
 ![](exploratory_and_Limma_analysis_files/figure-markdown_github/unnamed-chunk-21-1.png)
 
-We start by using clustering algorithms to cluster the top 40 genes that showed differential expression across the different diagnosis stage (BH adjusted p value &lt; 0.1).
+We start by using clustering algorithms to cluster the top 15 genes that showed differential expression across the different diagnosis stage (BH adjusted p value &lt; 0.1).
 
 ``` r
 pheatmap(top_Dat, cluster_rows = TRUE, scale = "none", clustering_method = "average", 
