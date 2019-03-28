@@ -1,7 +1,8 @@
 
+
 # Results ML
 
-The motivation behind using machine learning methods is to build a model that predicts PSD or not based on the gene expression profile of a patient. Training the model with an L1-penalty (penalize the use of more genes) induces that only "relevant" genes be included in the final model.
+The motivation behind using machine learning methods is to build a binary classifier that predicts PSD or not based on the gene expression profile of a patient. Training the model with an L1 or LASSO regularizer (penalize the use of more genes) induces that only "relevant" genes be included in the final model.
 
 In all following models, 70% of the samples were used for training and the remaining 30% were used to validate the model.
 
@@ -22,58 +23,47 @@ These 50 genes are:
 
 | Name | 
 | ------------- |
-|1553243_at|
-|1554675_a_at|
-|1555097_a_at|
-|1555591_at|
-|1556209_at|
-|1556617_a_at|
-|1556706_at|
-|1556786_at|
-|1557161_at|
-|1557890_at|
-|1558857_at|
-|1561003_at|
-|1561365_at|
-|1561578_s_at|
-|1564010_at|
-|1569975_at|
-|202198_s_at|
-|202933_s_at|
-|205741_s_at|
-|206835_at|
-|207681_at|
-|208526_at|
-|209710_at|
-|209997_x_at|
-|212836_at|
-|215636_at|
-|219196_at|
-|219758_at|
-|220183_s_at|
-|220783_at|
-|221827_at|
-|222324_at|
-|223187_s_at|
-|226137_at|
-|228559_at|
-|230514_s_at|
-|231446_at|
-|231487_at|
-|233379_at|
-|234110_at|
-|235104_at|
-|237597_at|
-|238314_x_at|
-|239951_at|
-|240125_at|
-|240750_at|
-|244654_at|
-|34408_at|
-|56919_at|
-|65635_at|
+|FILNC1|
+|PTGFR|
+|RTN2|
+|STXBP5-AS1|
+|LINC02366|
+|POLD3|
+|MMP27|
+|AC009063.1|
+|UBR4|
+|NUDT6|
+|ITIH5|
+|PIF1|
+|AL162171.1|
+|CXCR3|
+|COX8C|
+|MYO1G|
+|OR2F1|
+|ERAP2|
+|PCM1|
+|MTMR3|
+|LINC00901|
+|ORMDL1|
+|LYZL1|
+|ENGASE|
+|SCG3|
+|RBCK1|
+|SLC25A53|
+|DTNA|
+|COX8C|
+|ZFHX3|
+|YES1|
+|STATH|
+|SYCE1|
+|WDR48|
+|LYZL2|
+|GATA2|
+|TTC26|
+|AC092718.4|
+|OR2F1|
+|STATH|
 
-Further analysis: comparison with statistical results
 
 
 ## Stochastic Gradient Descent (scikit-learn SGDClassifier)
@@ -94,45 +84,41 @@ These 39 genes are:
 
 | Name | 
 | ------------- |
-|1555707_at|
-|1555827_at|
-|1558920_at|
-|1559470_at|
-|1561778_at|
-|1562933_at|
-|1564052_at|
-|1567702_at|
-|1567860_at|
-|201056_at|
-|206702_at|
-|206835_at|
-|207681_at|
-|209120_at|
-|209710_at|
-|210387_at|
-|211298_s_at|
-|213850_s_at|
-|214882_s_at|
-|216566_at|
-|217621_at|
-|219077_s_at|
-|220783_at|
-|223580_at|
-|224396_s_at|
-|231842_at|
-|232752_at|
-|238314_x_at|
-|239186_at|
-|239871_at|
-|239975_at|
-|240125_at|
-|240488_at|
-|240946_at|
-|241001_at|
-|242662_at|
-|243283_at|
-|243720_at|
-|244505_at|
+|GOLGB1|
+|AC068620.2|
+|SLC8A1-AS1|
+|HLA-DPB2|
+|TEK|
+|WWOX|
+|CCNL1|
+|AL606752.1|
+|HLA-DPB2|
+|CMIP|
+|HLA-DPB2|
+|SCAF11|
+|MIR4645|
+|MMP27|
+|ALB|
+|SPSB2|
+|JCAD|
+|HLA-DPB2|
+|AC136621.1|
+|SLC6A2|
+|NOP14-AS1|
+|TREML4|
+|HIST1H2BG|
+|CXCR3|
+|LOXL1-AS1|
+|SERPINB9P1|
+|SRSF2|
+|STATH|
+|D21S2088E|
+|HLA-DPB2|
+|ASPN|
+|GATA2|
+|NR2F2|
+|HLA-DPB2|
+|STATH|
 
 ## Random Forest (scikit-learn RandomForestClassifier)
 
@@ -152,23 +138,69 @@ Restricting the depth of the trees, an average of 85% classification accuracy wa
 
 # Analysis
 
-## Logistic Regression vs Stochastic Gradient Descent
+## Accuracy
 
-6 genes were found to be relevant in both models. These genes are
+The achieved classification accuracy of 75 - 80% improves on the paper's model's 68% accuracy, using even less genes (39 or 50 instead of 55). 
 
-| Matching genes| 
-| ------------- |
-|206835_at|
-|207681_at|
-|209710_at <--|
-|220783_at|
-|238314_x_at|
-|240125_at|   
+## Common genes
 
-## TODO
-- Transfer to regular gene name
-- Compare with statistical analysis
-- Compare with ongoing research
-- Statement about improving the paper's model
-- No age or batch number as feature
+We compare the genes used in the models with the genes found to be statistically relevant:
 
+| Log. reg. vs SGD | Log. reg. vs Stat | SGD vs Stat | All | 
+| --- | ----------- | --------- | ---- |
+|GATA2| GATA2		| GATA2		| GATA2	|
+|CXCR3| PCM1		| HIST1H2BG	|		|
+|STATH| ORMDL1		| 			|		|	
+|MMP27| YES1		|			|		|
+|STATH| NUDT6		|			|		|
+|     | TTC26		|			|		|
+|     | AC092718.4	|			|		|
+
+
+The list of the top 40 statistically relevant genes is provided below for completeness:
+| Statistical analysis |
+| ------ |
+|PNN|
+|AHSA2P|
+|CREBZF|
+|RF02193|
+|RBM39|
+|TCL6|
+|LUC7L|
+|TTLL3|
+|AL034370.1|
+|LUC7L3|
+|LUC7L3|
+|LUC7L3|
+|TIGD1|
+|TREML3P|
+|NUDT6|
+|MALAT1|
+|MALAT1|
+|MLLT6|
+|TSKS|
+|SNX1|
+|TLL2|
+|NBEAP1|
+|HIST1H2BG|
+|MLLT6|
+|EXOC7|
+|PCM1|
+|HNRNPA2B1|
+|KLF13|
+|ORMDL1|
+|YES1|
+|ID2|
+|SEMA4C|
+|GVINP1|
+|NINJ2|
+|GSAP|
+|GATA2|
+|TTC26|
+|AC092718.4|
+|SNRNP200|
+|KLF13|
+
+It is to note that in the statistical logisitic regression, we try to predict the gene expression profile based on the presence of the disease, while in the models, we try to predict the presence of the disease given the gene expression profile.
+
+It is surprising that there is little overlap between the genes used by the different models, and between the genes selected by the statistical analysis. Training a model on a small yet very high-dimensional dataset is difficult and leads to overfitting. 
