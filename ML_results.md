@@ -158,6 +158,7 @@ We compare the genes used in the models with the genes found to be statistically
 
 
 The list of the top 40 statistically relevant genes is provided below for completeness:
+
 | Statistical analysis |
 | ------ |
 |PNN|
