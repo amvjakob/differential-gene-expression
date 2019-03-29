@@ -228,7 +228,7 @@ We start by using clustering algorithms to cluster the top 15 genes that showed 
 ```{r}
 pheatmap(top_Dat, cluster_rows = TRUE, scale = "none", clustering_method = "average", 
     clustering_distance_cols = "euclidean", clustering_distance_rows = "euclidean", 
-    annotation = Meta_data_1[,c("diagnosis", "age","batch")], show_rownames = FALSE,show_colnames  = FALSE)
+    annotation = Meta_data_1[,c("diagnosis", "age","batch")], show_rownames = TRUE,show_colnames  = FALSE)
 ```
 
 ```{r}

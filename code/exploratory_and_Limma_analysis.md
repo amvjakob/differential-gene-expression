@@ -105,13 +105,13 @@ library(reshape2)
 library(tidyverse)
 ```
 
-    ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ─────────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ tibble  2.0.1     ✔ readr   1.3.1
     ## ✔ tidyr   0.8.3     ✔ purrr   0.3.1
     ## ✔ tibble  2.0.1     ✔ forcats 0.4.0
 
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ────────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::arrange()    masks plyr::arrange()
     ## ✖ dplyr::combine()    masks Biobase::combine(), BiocGenerics::combine()
     ## ✖ purrr::compact()    masks plyr::compact()
@@ -574,7 +574,7 @@ We start by using clustering algorithms to cluster the top 15 genes that showed 
 ``` r
 pheatmap(top_Dat, cluster_rows = TRUE, scale = "none", clustering_method = "average", 
     clustering_distance_cols = "euclidean", clustering_distance_rows = "euclidean", 
-    annotation = Meta_data_1[,c("diagnosis", "age","batch")], show_rownames = FALSE,show_colnames  = FALSE)
+    annotation = Meta_data_1[,c("diagnosis", "age","batch")], show_rownames = TRUE,show_colnames  = FALSE)
 ```
 
 ![](exploratory_and_Limma_analysis_files/figure-markdown_github/unnamed-chunk-22-1.png)
