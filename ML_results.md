@@ -1,6 +1,6 @@
 
 
-# Results ML
+# Machine Learning Methods
 
 The motivation behind using machine learning methods is to build a binary classifier that predicts PSD or not based on the gene expression profile of a patient. Training the model with an L1 or LASSO regularizer (penalize the use of more genes) induces that only "relevant" genes be included in the final model.
 
@@ -12,12 +12,12 @@ The second study contains two datasets: one was used to train the model, and one
 
 ### Implementation details
 - 4-fold cross-validation using bootstrapping led to an optimal regularization constant C of 0.1 for L1-regularization.
-- Maximum 100 iterations to train the model
+- 100 iterations to train each model
 
 ### Results
 Training on only the second dataset led to a model averaging 89% classification accuracy using only 40 genes. This model however performed poorly on the first dataset, averaging only 56% classification accuracy, and 66% on the combined datasets. This is a clear example of overfitting and thus the model is of little value for further investigations.
 
-Training on the combined datasets led to a model averaging 84% classification accuracy using only 50 genes. Training and validating on the first dataset only leads to a 73% classification accuracy, and 82% when only using the second dataset.
+Training on the combined datasets led to a model averaging 84% classification accuracy using only 50 genes. Training and validating on the first dataset only led to a 73% classification accuracy, and 82% when only using the second dataset.
 
 These 50 genes are:
 
@@ -63,7 +63,6 @@ These 50 genes are:
 |AC092718.4|
 |OR2F1|
 |STATH|
-
 
 
 ## Stochastic Gradient Descent (scikit-learn SGDClassifier)
@@ -147,61 +146,38 @@ The achieved classification accuracy of 75 - 80% improves on the paper's model's
 We compare the genes used in the models with the genes found to be statistically relevant:
 
 | Log. reg. vs SGD | Log. reg. vs Stat | SGD vs Stat | All | 
-| --- | ----------- | --------- | ---- |
-|GATA2| GATA2		| GATA2		| GATA2	|
-|CXCR3| PCM1		| HIST1H2BG	|		|
+| --- | ----------- | --------- | ----- |
+|GATA2| AC092718.4	| HIST1H2BG	|  		|
+|CXCR3| PCM1		| 			|		|
 |STATH| ORMDL1		| 			|		|	
-|MMP27| YES1		|			|		|
-|STATH| NUDT6		|			|		|
-|     | TTC26		|			|		|
-|     | AC092718.4	|			|		|
+|MMP27| 			|			|		|
 
 
-The list of the top 40 statistically relevant genes is provided below for completeness:
+The list of the 13 statistically relevant genes is provided below for completeness:
 
 | Statistical analysis |
 | ------ |
 |PNN|
-|AHSA2P|
-|CREBZF|
-|RF02193|
-|RBM39|
-|TCL6|
 |LUC7L|
-|TTLL3|
-|AL034370.1|
-|LUC7L3|
-|LUC7L3|
 |LUC7L3|
 |TIGD1|
-|TREML3P|
-|NUDT6|
-|MALAT1|
 |MALAT1|
 |MLLT6|
-|TSKS|
-|SNX1|
 |TLL2|
-|NBEAP1|
 |HIST1H2BG|
-|MLLT6|
-|EXOC7|
 |PCM1|
 |HNRNPA2B1|
-|KLF13|
 |ORMDL1|
-|YES1|
-|ID2|
-|SEMA4C|
-|GVINP1|
-|NINJ2|
 |GSAP|
-|GATA2|
-|TTC26|
 |AC092718.4|
-|SNRNP200|
-|KLF13|
 
 It is to note that in the statistical logisitic regression, we try to predict the gene expression profile based on the presence of the disease, while in the models, we try to predict the presence of the disease given the gene expression profile.
 
-It is surprising that there is little overlap between the genes used by the different models, and between the genes selected by the statistical analysis. Training a model on a small yet very high-dimensional dataset is difficult and leads to overfitting. 
+There is little overlap between the genes used by the different models, and no single gene was found in all three cases.
+
+The selected genes seem uncorrelated to ASD at first glance: GATA2 is a transcription factor which can lead to a wide range of diseases if mutated, PCM1 is essential for the localization of centrosomal proteins and HIST1H2BG is a histone-coding gene.
+
+## Age
+
+The age of the patient was added to the data as another feature to train the models (i.e. it acts as if it were the expression value of an additional gene). Age was not selected as a relevant feature for prediction of ASD in any model.
+

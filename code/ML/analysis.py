@@ -22,15 +22,14 @@ def intersect(a, b):
             matching.append(e)
     return e
 
-"""
-X = load_dataset_np('data_X_pa.npy')
-dataset = load_dataset_pickle('data_y_pa.pkl')
+X = load_dataset_np('data_X.npy')
+dataset = load_dataset_pickle('data_y.pkl')
 y = dataset["y"]
 metadata = np.array(dataset["metadata"])
 genes = dataset["gene_names"]
-"""
 
-modelGenes = load_dataset_pickle("bestSGD.pkl")
+
+modelGenes = load_dataset_pickle("bestLogReg.pkl")
 indices = []
 
 genesStat = ['209997_x_at', '223187_s_at', '225932_s_at', '223546_x_at', '226675_s_at', '212036_s_at', '1553099_at', '241792_x_at', '215843_s_at', '226334_s_at', '210387_at', '224567_x_at', '209710_at', '213142_x_at', '225628_s_at', '228559_at', '202933_s_at', '1557446_x_at', '219758_at', '208835_s_at', '234789_at', '213931_at', '220544_at', '225390_s_at', '225594_at', '239964_at', '1569482_at', '232931_at', '219594_at', '220183_s_at', '213364_s_at', '242389_at', '1566974_at', '208720_s_at', '46665_at', '220577_at', '1560684_x_at', '1555475_x_at', '214802_at', '225767_at']
@@ -55,9 +54,13 @@ for gene in genes:
 # Reduce X
 X = np.array([[example[idx] for idx in indices] for example in X])
 split = int(len(y)*7/10)
-n = 100
+n = 1000
 acc = 0.0
 nnz = 0.0
+
+bestAcc = 0
+bestCoef = []
+avgCoef = []
 
 # format for markdown
 # for g in modelGenes: print('|' + g.strip("'") + '|')
@@ -74,7 +77,19 @@ for i in range(n):
     model = LogisticRegression()
     model.fit(Xtrain, ytrain)
 
-    acc += classification_accuracy(model.predict(Xtest), ytest)
+    acc_i = classification_accuracy(model.predict(Xtest), ytest) 
+    acc += acc_i
     nnz += (model.coef_ != 0).sum()
+    if len(avgCoef) < 1:
+        avgCoef = model.coef_
+    else:
+        avgCoef += model.coef_
 
+    if acc_i > bestAcc:
+        bestAcc = acc_i
+        bestCoef = model.coef_
+
+avgCoef = avgCoef / n
+
+print("validation accuracy of avg model: %.3f with 50 non-zeros" % classification_accuracy(((np.sign(Xtest@avgCoef.ravel().transpose())+1)/2).astype(int), ytest))
 print("avg validation accuracy: %.3f with %d non-zeros" % (acc/n, nnz/n))

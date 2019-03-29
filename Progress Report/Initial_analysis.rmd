@@ -400,7 +400,7 @@ gset <- gset[[idx]]
 require("biomaRt")
 mart <- useMart("ENSEMBL_MART_ENSEMBL")
 mart <- useDataset("hsapiens_gene_ensembl", mart)
-genesStat <- c("209997_x_at", "223187_s_at", "225932_s_at", "223546_x_at", "226675_s_at", "212036_s_at", "1553099_at", "241792_x_at", "215843_s_at", "226334_s_at", "210387_at", "224567_x_at", "209710_at", "213142_x_at", "225628_s_at", "228559_at", "202933_s_at", "1557446_x_at", "219758_at", "208835_s_at", "234789_at", "213931_at", "220544_at", "225390_s_at", "225594_at", "239964_at", "1569482_at", "232931_at", "219594_at", "220183_s_at", "213364_s_at", "242389_at", "1566974_at", "208720_s_at", "46665_at", "220577_at", "1560684_x_at", "1555475_x_at", "214802_at", "225767_at")
+genesStat <- top_Genes
 genesLogReg <- c("1553243_at", "1554675_a_at", "1555097_a_at", "1555591_at", "1556209_at", "1556617_a_at", "1556706_at", "1556786_at", "1557161_at", "1557890_at", "1558857_at", "1561003_at", "1561365_at", "1561578_s_at", "1564010_at", "1569975_at", "202198_s_at", "202933_s_at", "205741_s_at", "206835_at", "207681_at", "208526_at", "209710_at", "209997_x_at", "212836_at", "215636_at", "219196_at", "219758_at", "220183_s_at", "220783_at", "221827_at", "222324_at", "223187_s_at", "226137_at", "228559_at", "230514_s_at", "231446_at", "231487_at", "233379_at", "234110_at", "235104_at", "237597_at", "238314_x_at", "239951_at", "240125_at", "240750_at", "244654_at", "34408_at", "56919_at", "65635_at")
 genesSGD <- c("1555707_at", "1555827_at", "1558920_at", "1559470_at", "1561778_at", "1562933_at", "1564052_at", "1567702_at", "1567860_at", "201056_at", "206702_at", "206835_at", "207681_at", "209120_at", "209710_at", "210387_at", "211298_s_at", "213850_s_at", "214882_s_at", "216566_at", "217621_at", "219077_s_at", "220783_at", "223580_at", "224396_s_at", "231842_at", "232752_at", "238314_x_at", "239186_at", "239871_at", "239975_at", "240125_at", "240488_at", "240946_at", "241001_at", "242662_at", "243283_at", "243720_at", "244505_at")
 
@@ -408,13 +408,13 @@ allGenes <- unique(c(genesStat,genesLogReg,genesSGD))
 
 annotLookup <- getBM(mart=mart, attributes=c("affy_hg_u133_plus_2", "ensembl_gene_id", "gene_biotype", "external_gene_name"), filter="affy_hg_u133_plus_2", values=allGenes, uniqueRows=TRUE)
 
-# annotLookup[annotLookup$affy_hg_u133_plus_2 %in% genesStat,]$external_gene_name
-# annotLookup[annotLookup$affy_hg_u133_plus_2 %in% genesLogReg,]$external_gene_name
-# annotLookup[annotLookup$affy_hg_u133_plus_2 %in% genesSGD,]$external_gene_name
+unique(annotLookup[annotLookup$affy_hg_u133_plus_2 %in% genesStat,]$external_gene_name)
+# unique(annotLookup[annotLookup$affy_hg_u133_plus_2 %in% genesLogReg,]$external_gene_name)
+# unique(annotLookup[annotLookup$affy_hg_u133_plus_2 %in% genesSGD,]$external_gene_name)
 
-# annotLookup[annotLookup$affy_hg_u133_plus_2 %in% intersect(genesLogReg, genesSGD),]$external_gene_name
-# annotLookup[annotLookup$affy_hg_u133_plus_2 %in% intersect(genesLogReg, genesStat),]$external_gene_name
-# annotLookup[annotLookup$affy_hg_u133_plus_2 %in% intersect(genesStat, genesSGD),]$external_gene_name
+# unique(annotLookup[annotLookup$affy_hg_u133_plus_2 %in% intersect(genesLogReg, genesSGD),]$external_gene_name)
+# unique(annotLookup[annotLookup$affy_hg_u133_plus_2 %in% intersect(genesLogReg, genesStat),]$external_gene_name)
+# unique(annotLookup[annotLookup$affy_hg_u133_plus_2 %in% intersect(genesStat, genesSGD),]$external_gene_name)
 
 
 ```

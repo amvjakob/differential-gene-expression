@@ -50,6 +50,7 @@ if __name__ == "__main__":  # always guard your multiprocessing code
     hasControl = True
     verbose = True
     logData = True
+    scaled = True
 
     X = load_dataset_np('data_X.npy')
     dataset = load_dataset_pickle('data_y.pkl')
@@ -97,6 +98,7 @@ if __name__ == "__main__":  # always guard your multiprocessing code
         X = np.array(X_new).transpose()
         genes = genes_new
 
+    if not scaled:
         # Center and scale data
         X = scale(X)
 
@@ -121,13 +123,14 @@ if __name__ == "__main__":  # always guard your multiprocessing code
 
 
     if verbose: print("Best C: %.3f" % C)
-    
+
+    X = X[:,:(X.shape[1]-1)]
 
     split = int(len(y)*7/10)
     Xtrain, ytrain = X[:split], y[:split]
     Xtest, ytest = X[split:], y[split:]
 
-    nModels = 10
+    nModels = 100
     best_acc = 0
     best_acc_nnz = 10000
     best_acc_genes = []
@@ -164,6 +167,8 @@ if __name__ == "__main__":  # always guard your multiprocessing code
     print("Best non-zeros: %d with validation accuracy %.3f" % (best_nnz, best_nnz_acc))
 
     if best_acc_nnz < 100:
-        dt = np.array(genes)[best_acc_genes]
+        dt = np.array(genes)[best_acc_genes[:len(best_acc_genes)-1]]
+        if best_acc_genes[len(best_acc_genes)-1]:
+            dt.append('Age')
         with open('best_genes_sgd_' + str(best_acc_nnz) + '_' + str(best_acc) + '.pkl', 'wb') as f:
             pickle.dump(dt, f)
