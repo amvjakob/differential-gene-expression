@@ -3,7 +3,7 @@ import pickle
 from sklearn.linear_model import LogisticRegression, ElasticNet, SGDClassifier
 from sklearn import svm
 from sklearn.preprocessing import scale
-
+import argparse
 import multiprocessing as mp
 
 """
@@ -29,11 +29,11 @@ def cross_validate_async(X, y, C):
     n = len(y)
     n_blocks = 4
     len_blocks = int(n * 1.0 / n_blocks)
-    # print("cross_validate_async with C = %.3f" % C)
 
-    # do crossvalidation leaving out one example at the time
+    # do crossvalidation leaving out one block at the time
     cumulative_error = 0
     for i in range(0, n, len_blocks):
+        # select training examples
         indices_val = np.array([j >= i and j <= i + len_blocks - 1 for j in range(n)])
         indices_train = np.invert(indices_val)
 
@@ -42,55 +42,36 @@ def cross_validate_async(X, y, C):
         cumulative_error += classification_error(model.predict(X[indices_val,:]), y[indices_val])
 
     cumulative_error /= 1.0 * n_blocks
-
     return { 'error': cumulative_error, 'C': C }
 
-if __name__ == "__main__":  # always guard your multiprocessing code
+if __name__ == "__main__":
 
-    hasControl = True
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-x', '--dataX', required=True)
+    parser.add_argument('-y', '--dataY', required=True)
+
+    io_args = parser.parse_args()
+    filename = io_args.dataX  # data_X.npy
+    filenameMeta = io_args.dataY  # data_y.pkl
+    
     verbose = True
     logData = True
     scaled = True
+    doCrossVal = False
 
-    X = load_dataset_np('data_X.npy')
-    dataset = load_dataset_pickle('data_y.pkl')
+    # load data
+    X = load_dataset_np(filename)
+    dataset = load_dataset_pickle(filenameMeta)
     y = dataset["y"]
     metadata = np.array(dataset["metadata"])
     genes = dataset["gene_names"]  
-
-    """
-    # caution: gene names might not match
-    if hasControl:
-        X_ctrl = load_dataset_np('data_X_control.npy')
-        dataset_ctrl = load_dataset_pickle('data_y_control.pkl')
-        genes_ctrl = dataset_ctrl["gene_names"] 
-
-        print(genes[100:110])
-        print(genes_ctrl[1000:1100])
-        
-        X_new = []
-        genes_new = []
-        for i in range(X_ctrl.shape[1]):
-            try:
-                idx = genes.index(genes_ctrl[i])
-                X_new.append(X[:,idx])
-                genes_new.append(genes[idx])
-            except:
-                # skip
-                continue
-
-        print(np.array(X_new).transpose().shape)
-        print(X_ctrl.shape)
-        X = np.append(np.array(X_new).transpose(), X_ctrl, axis=0)
-        y = y + dataset_ctrl["y"]
-        genes = genes_new
-    """
 
     if not logData:
         # Remove lowly expressed genes
         X_new = []
         genes_new = []
         for i in range(X.shape[1]):
+            # min threshold expression is 150 for all samples
             if all(gene >= 150 for gene in X[:,i]):
                 X_new.append(X[:,i])
                 genes_new.append(genes[i])
@@ -102,33 +83,34 @@ if __name__ == "__main__":  # always guard your multiprocessing code
         # Center and scale data
         X = scale(X)
 
-    if verbose: print("Shuffling")
-    randomize = np.arange(len(y))
-    np.random.seed(12)
-    np.random.shuffle(randomize)
-    X, y, metadata = X[randomize], y[randomize], metadata[randomize]
+    # Cross-validation to select optimal C
+    if doCrossVal:
+        # Shuffle data
+        randomize = np.arange(len(y))
+        np.random.shuffle(randomize)
+        X, y, metadata = X[randomize], y[randomize], metadata[randomize]
 
-    cores = max(mp.cpu_count() - 1, 1)  # ensure at least one process
-    if verbose: print("Running on %i cores" % cores)
-    C = 0.1
-    """with mp.Pool(processes=cores) as pool:
-        Cs = [pool.apply_async(cross_validate_async, (X, y, 10 ** c,)) for c in range(-3, 3)]
-        results = [result.get() for result in Cs]
+        # Cross validate in parallel
+        cores = max(mp.cpu_count() - 1, 1)  # ensure at least one process
+        if verbose: print("Running on %i cores" % cores)
 
-        best_err = np.inf
-        for result in results:
-            if result['error'] < best_err:
-                best_err = result['error']
-                C = result['C']"""
+        with mp.Pool(processes=cores) as pool:
+            Cs = [pool.apply_async(cross_validate_async, (X, y, 10 ** c,)) for c in range(-4, 4)]
+            results = [result.get() for result in Cs]
 
+            best_err = np.inf
+            for result in results:
+                if result['error'] < best_err:
+                    best_err = result['error']
+                    C = result['C']
+    else:
+        C = 0.1
 
-    if verbose: print("Best C: %.3f" % C)
+    if verbose: print("Running with C = %.3f" % C)
 
-    X = X[:,:(X.shape[1]-1)]
-
-    split = int(len(y)*7/10)
-    Xtrain, ytrain = X[:split], y[:split]
-    Xtest, ytest = X[split:], y[split:]
+    # Use 70% of the data to train and the rest to test
+    N = len(y)
+    split = int(N*7/10)
 
     nModels = 100
     best_acc = 0
@@ -137,21 +119,23 @@ if __name__ == "__main__":  # always guard your multiprocessing code
     best_nnz = 10000
     best_nnz_acc = 0
     best_nnz_genes = []
+
     for i in range(nModels):
         if verbose: print("Iteration %d" % i)
 
         # Shuffle data
         randomize = np.arange(len(y))
-        # 12 np.random.seed(i)
         np.random.shuffle(randomize)
         X, y, metadata = X[randomize], y[randomize], metadata[randomize]
 
         Xtrain, ytrain = X[:split], y[:split]
         Xtest, ytest = X[split:], y[split:]
         
+        # Fit model
         model = SGDClassifier(loss='hinge', penalty='elasticnet', alpha=C, l1_ratio=0.9, max_iter=100)
         model.fit(Xtrain, ytrain)
 
+        # Test model
         acc = classification_accuracy(model.predict(Xtest), ytest)
         nnz = (model.coef_ != 0).sum()
         if acc > best_acc:
@@ -163,9 +147,11 @@ if __name__ == "__main__":  # always guard your multiprocessing code
             best_nnz_acc = acc
             best_nnz_genes = (model.coef_ != 0)[0]
 
+    # Display some stats
     print("Best validation accuracy: %.3f with %d non-zeros" % (best_acc, best_acc_nnz))
     print("Best non-zeros: %d with validation accuracy %.3f" % (best_nnz, best_nnz_acc))
 
+    # Save model if it uses less than 100 genes
     if best_acc_nnz < 100:
         dt = np.array(genes)[best_acc_genes[:len(best_acc_genes)-1]]
         if best_acc_genes[len(best_acc_genes)-1]:

@@ -2,7 +2,7 @@ import numpy as np
 import pickle
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import scale
-
+import argparse
 import multiprocessing as mp
 
 """
@@ -24,33 +24,23 @@ def classification_error(y, yhat):
 def classification_accuracy(y, yhat):
     return 1 - np.mean(y!=yhat)
 
-def cross_validate_async(X, y, C):
-    n = len(y)
-    n_blocks = 4
-    len_blocks = int(n * 1.0 / n_blocks)
-    # print("cross_validate_async with C = %.3f" % C)
+if __name__ == "__main__":
 
-    # do crossvalidation leaving out one example at the time
-    cumulative_error = 0
-    for i in range(0, n, len_blocks):
-        indices_val = np.array([j >= i and j <= i + len_blocks - 1 for j in range(n)])
-        indices_train = np.invert(indices_val)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-x', '--dataX', required=True)
+    parser.add_argument('-y', '--dataY', required=True)
 
-        model = SGDClassifier(loss='hinge', penalty='elasticnet', alpha=C, l1_ratio=0.3, max_iter=100)
-        model.fit(X[indices_train, :], y[indices_train])
-        cumulative_error += classification_error(model.predict(X[indices_val,:]), y[indices_val])
+    io_args = parser.parse_args()
+    filename = io_args.dataX  # data_X.npy
+    filenameMeta = io_args.dataY  # data_y.pkl
 
-    cumulative_error /= 1.0 * n_blocks
-
-    return { 'error': cumulative_error, 'C': C }
-
-if __name__ == "__main__":  # always guard your multiprocessing code
-
-    X = load_dataset_np('data_X.npy')
-    dataset = load_dataset_pickle('data_y.pkl')
+    X = load_dataset_np(filename)
+    dataset = load_dataset_pickle(filenameMeta)
     y, metadata, gene_names = dataset["y"], np.array(dataset["metadata"]), dataset["gene_names"]
+
     verbose = True
     logData = True
+    isScaled = True
 
     if not logData:
         # Remove lowly expressed genes
@@ -64,51 +54,38 @@ if __name__ == "__main__":  # always guard your multiprocessing code
         X = np.array(X_new).transpose()
         genes = genes_new
 
+    if not isScaled:
         # Center and scale data
         X = scale(X)
 
-    if verbose: print("Shuffling... ", end='')
-    randomize = np.arange(len(y))
-    np.random.seed(12)
-    np.random.shuffle(randomize)
-    X, y, metadata = X[randomize], y[randomize], metadata[randomize]
-    if verbose: print("Done")
-
-    """
-    cores = max(mp.cpu_count() - 1, 1)  # ensure at least one process
-    if verbose: print("Running on %i cores" % cores)
-    C = 0.01
-    with mp.Pool(processes=cores) as pool:
-        Cs = [pool.apply_async(cross_validate_async, (X, y, 10 ** c,)) for c in range(-3, 3)]
-        results = [result.get() for result in Cs]
-
-        best_err = np.inf
-        for result in results:
-            if result['error'] < best_err:
-                best_err = result['error']
-                C = result['C']
-
-
-    if verbose: print("Best C: %.3f" % C)
-    """
-
-    split = int(len(y)*7/10)
-    Xtrain, ytrain = X[:split], y[:split]
-    Xtest, ytest = X[split:], y[split:]
+    N = len(y)
+    split = int(N*7/10)
 
     nModels = 100
     best_acc = 0
     best_acc_nnz = 10000
     best_nnz = 10000
     best_nnz_acc = 0
+
     for i in range(nModels):
         if verbose: print("Iteration %d" % i)
 
+        # shuffe data
+        randomize = np.arange(N)
+        np.random.shuffle(randomize)
+        X, y, metadata = X[randomize], y[randomize], metadata[randomize]
+
+        # split data
+        Xtrain, ytrain = X[:split], y[:split]
+        Xtest, ytest = X[split:], y[split:]
+
+        # Fit model
         model = RandomForestClassifier(n_estimators=100, max_depth=20)
         model.fit(Xtrain, ytrain)
 
+        # Test model
         acc = classification_accuracy(model.predict(Xtest), ytest)
-        nnz = model.n_features_ #(model.coef_ != 0).sum()
+        nnz = model.n_features_
         if acc > best_acc:
             best_acc = acc
             best_acc_nnz = nnz
@@ -116,5 +93,6 @@ if __name__ == "__main__":  # always guard your multiprocessing code
             best_nnz = nnz
             best_nnz_acc = acc
 
+    # Print data
     print("Best validation accuracy: %.3f with %d non-zeros" % (best_acc, best_acc_nnz))
     print("Best non-zeros: %d with validation accuracy %.3f" % (best_nnz, best_nnz_acc))
