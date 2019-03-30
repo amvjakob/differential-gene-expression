@@ -8,6 +8,10 @@ In all following models, 70% of the samples were used for training and the remai
 
 The second study contains two datasets: one was used to train the model, and one to validate the model. Unfortunately, different platforms were used to acquire the gene expression profiles, leading to a different nomenclature of the gene names. As such, the second part of the second dataset could not be used in any analysis.
 
+## Procedure
+The expression data was pre-processed in R to center and normalize it.
+The samples were used as examples in the model. The expression value of every gene was considered to be a feature of every example fed to the model.
+
 ## Logistic Regression (scikit-learn LogisticRegression)
 
 ### Implementation details
@@ -181,3 +185,7 @@ The selected genes seem uncorrelated to ASD at first glance: GATA2 is a transcri
 
 The age of the patient was added to the data as another feature to train the models (i.e. it acts as if it were the expression value of an additional gene). Age was not selected as a relevant feature for prediction of ASD in any model.
 
+# References
+- [Python](https://www.python.org/)
+- [numpy](http://www.numpy.org/), used to simplify numerical operations
+- [scikit-learn](https://scikit-learn.org/stable/index.html), used as machine learning library
