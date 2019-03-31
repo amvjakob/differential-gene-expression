@@ -4,7 +4,7 @@
 
 This is the repository of team Y0ung parents. It contains the work of their group on the STAT 540 project.
 
-## Project Goals
+## Reports & Presentations
 
 The links below will provide readers with a description of our aims and main findings of this project.
 
