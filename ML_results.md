@@ -69,10 +69,10 @@ These 50 genes are:
 |STATH|
 
 
-## Stochastic Gradient Descent (scikit-learn SGDClassifier)
+## Linear SVM trained with Stochastic Gradient Descent (scikit-learn SGDClassifier)
 
 ### Implementation details
-- Hinge loss and elastic net penalty, with a L1-to-L2-ratio of 0.9
+- Hinge loss (leads to linear SVM) and elastic net penalty, with a L1-to-L2-ratio of 0.9
 - 4-fold cross-validation using bootstrapping led to an optimal regularization constant C of 0.1 for elastic net regularization
 - Maximum 100 iterations of stochastic gradient descent
 
