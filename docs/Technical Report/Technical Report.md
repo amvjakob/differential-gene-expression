@@ -32,7 +32,7 @@ Linear regression: Linear regression was performed by using the “limma” pack
 
 Normality check: We need to check whether the residuals are normally distributed when we use linear regression. We use the Anderson-Darling and the Shapiro-Wilks test to check the residuals. We also us a Bonferroni correction on the significance threshold to control the number of false positives.
 
-More details for our analysis can be found in [exploratory\_and\_limma\_analyses.md](../../code/preprocessing/exploratory_and_limma_analysis/exploratory_and_Limma_analysis.md).
+More details for our analysis can be found in [exploratory\_and\_limma\_analyses.md](../../code/exploratory_and_limma_analysis/exploratory_and_Limma_analysis.md).
 
 Statistical Result
 ------------------
