@@ -5,7 +5,7 @@ date: '2019-03-28'
 output: github_document
 ---
 
-## Methods 
+## Clean and organize the data
 
 Clean the data: First, we combined data from two publicly available datasets from the Gene Expression Omnibus (GEO) database (GEO accession numbers GSE18123 and GSE25507). The second dataset was subdivided into two separate datasets, which were generated using different sequencing platforms in the study. No rubric was provided to merge these datasets by IDs successfully. For this reason, we selected the first of the two datasets (GSE25507), which uses the same ID references as our first dataset (GSE18123). We choose the interested variables such as age, batch, diagnosis from the two metadata. 
 
@@ -16,7 +16,9 @@ GSE25507 has batch information(batch 1 and batch 2); however, GSE18123 has no in
 There are some missing values (15 samples) for our age variable. We consider these missing points might correlate with other variables(such as gender or batch). This satisfies the condition that the missing value is missing at random. Then we perform the multiple imputations with five repetitions for our age variable. The two pre-processed GEO datasets were merged after these the step.
 
 Normalization: We first took log2 transformation for both gene expression datasets. Since the scales of the two datasets are different, we decided that quantile normalization was appropriate for our data after considering a few normalization methods. The density plot of average gene expression value can be found in our analysis.
-For further details of this step, please refer to [pre_processing_data.Rmd](). 
+For further details of this step, please refer to [pre_processing_data.Rmd](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/code/Pre_processing.md). 
+
+## Statistical methods
 
 Afterward, we performed our exploratory analysis on the data and model the data with Limma. Several analytical approaches we applied include PCA, agglomerative hierarchical clustering, modeling with limma. 
 
@@ -28,4 +30,26 @@ Linear regression: Linear regression was performed by using the “limma” pack
 
 Normality check: We need to check whether the residuals are normally distributed when we use linear regression.  We use the Anderson-Darling and the Shapiro-Wilks test to check the residuals. We also us a Bonferroni correction on the significance threshold to control the number of false positives.
 
-More details for our analysis can be found in [exploratory_and_limma_analyses.md]().
+More details for our analysis can be found in [exploratory_and_limma_analyses.md](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/code/exploratory_and_Limma_analysis.md).
+
+## Statistical result
+We used Limma to identify the top differentially genes To do so we fit each gene with a linear regression model as follows:
+\[
+\mathbf{Y_\text{gene}}=\beta_{0}+\beta_{1}\mathbf{age}+\beta_{2}\mathbf{batch}+\beta_{3}\mathbf{diagnosis}+\epsilon
+\]
+
+where,
+
+$\mathbf{Y_\text{gene}}$ represents the vector of expression levels for each gene. 
+
+$\beta_{0}$ is the intercept vector.
+
+$\mathbf{age}$ is a continuous variable that indicates people age between 1 and 17.5. $\beta_{1}$ is the coefficient of the $\mathbf{cell\_type}$.
+
+$\mathbf{batch}$ is a binary variable with 3 levels(batch 1, batch 2 and none). $\beta_{2}$ is the coefficient of the $\mathbf{batch}$.
+
+$\mathbf{diagnosis}$ is a binary variable with two levels (autism and control).  $\beta_{3}$ is the coefficient of the $\mathbf{diagnosis}$.
+
+$\epsilon$ is a variable of residuals for a certain gene.
+
+We identified 15 different genes between control and autism cases (p-value cutoff = 0.01) by using the multiple linear regression. One of our hypotheses was that different gene expression would be detectable in comparing control and autism cases, concerning age and batch. Additionally, our PCA results show that age, diagnosis (control and autism) and batch are all not related to first two of the variability we are observing in our data. 
