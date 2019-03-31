@@ -1,12 +1,10 @@
-Untitled
+Technical Report
 ================
-Yanchao
-2019-03-28
 
-Clean and organize the data
+Data Cleaning
 ---------------------------
 
-Clean the data: First, we combined data from two publicly available datasets from the Gene Expression Omnibus (GEO) database (GEO accession numbers GSE18123 and GSE25507). The second dataset was subdivided into two separate datasets, which were generated using different sequencing platforms in the study. No rubric was provided to merge these datasets by IDs successfully. For this reason, we selected the first of the two datasets (GSE25507), which uses the same ID references as our first dataset (GSE18123). We choose the interested variables such as age, batch, diagnosis from the two metadata.
+First, we combined data from two publicly available datasets from the Gene Expression Omnibus (GEO) database (GEO accession numbers GSE18123 and GSE25507). The second dataset was subdivided into two separate datasets, which were generated using different sequencing platforms in the study. No rubric was provided to merge these datasets by IDs successfully. For this reason, we selected the first of the two datasets (GSE25507), which uses the same ID references as our first dataset (GSE18123). We choose the interested variables such as age, batch, diagnosis from the two metadata.
 
 We convert diagnosis to a categorical variable which has two levels(autism and control).
 
@@ -16,7 +14,8 @@ There are some missing values (15 samples) for our age variable. We consider the
 
 Normalization: We first took log2 transformation for both gene expression datasets. Since the scales of the two datasets are different, we decided that quantile normalization was appropriate for our data after considering a few normalization methods. The density plot of average gene expression value can be found in our analysis. For further details of this step, please refer to [pre\_processing\_data.Rmd](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/code/Pre_processing.md).
 
-Statistical methods
+
+Statistical Methods
 -------------------
 
 Afterward, we performed our exploratory analysis on the data and model the data with Limma. Several analytical approaches we applied include PCA, agglomerative hierarchical clustering, modeling with limma.
@@ -31,7 +30,7 @@ Normality check: We need to check whether the residuals are normally distributed
 
 More details for our analysis can be found in [exploratory\_and\_limma\_analyses.md](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/code/exploratory_and_Limma_analysis.md).
 
-Statistical result
+Statistical Result
 ------------------
 
 We used Limma to identify the top differentially genes To do so we fit each gene with a linear regression model as follows:
@@ -52,3 +51,59 @@ where,
 *ϵ* is a variable of residuals for a certain gene.
 
 We identified 15 different genes between control and autism cases (p-value cutoff = 0.01) by using the multiple linear regression. One of our hypotheses was that different gene expression would be detectable in comparing control and autism cases, concerning age and batch. Additionally, our PCA results show that age, diagnosis (control and autism) and batch are all not related to first two of the variability we are observing in our data.
+
+
+Geneset Enrichment Analysis
+------------------
+
+A geneset enrichment analysis was employed to evaluate the expression values of the genes for GO term multifunctionality. Input data for this analysis was generated in the [pre-processing]( ) step, where the expression data is combined from both datasets (GEO accession numbers GSE18123 and GSE25507 (P1)), cleaned and normalised. To further prepare the data, a differential expression analysis was run by creating a design matrix with the metadata, lmfit() to fit a linear model, and ebayes() to compute logFC values and the probes IDs were annotated with their corresponding gene symbols. The input data was subsequently subsetted to gene symbol and logFC. 
+
+Gene multifunctionality scores were inputted from the STAT540 Github repository and used to check for the degree of multifunctional bias. The method employed was a Spearman’s correlation, which outputted a coefficient value close to zero, indicating little to no multifunctional bias. 
+
+Finally, a Precision-Recall method was utilised to calculate the p-value of GO terms after a multifunctionality correction. This enrichment method put emphasis on highly ranked genes, identifying enrichment that could potentially impact the weight of the predictor genes generated from the machine learning analysis. GO.xml file was accessed using ErmineR to place genes into sets.  As expected from the Spearman’s correlation coefficient, GO terms were only minimally corrected in the enrichment analysis, with the largest log p-value adjustment at 0.4714262. 
+
+These results overall indicate a low level of multifunctional bias. Furthermore, the top ranked genesets for bias did not contain any of the predictor genes generated in the machine learning analysis. 
+
+
+
+References
+------------------
+
+[2] Anney, Richard, Lambertus Klei, Dalila Pinto, Joana Almeida, Elena Bacchelli, Gillian Baird, Nadia Bolshakova et al. "Individual common variants exert weak effects on the risk for autism spectrum disorders." Human molecular genetics 21, no. 21 (2012): 4781-4792.
+
+[3] Liu, Li, Aniko Sabo, Benjamin M. Neale, Uma Nagaswamy, Christine Stevens, Elaine Lim, Corneliu A. Bodea et al. "Analysis of rare, exonic variation amongst subjects with autism spectrum disorders and population controls." PLoS genetics 9, no. 4 (2013): e1003443.
+
+[4] Alter, Mark D., Rutwik Kharkar, Keri E. Ramsey, David W. Craig, Raun D. Melmed, Theresa A. Grebe, R. Curtis Bay et al. "Autism and increased paternal age related changes in global levels of gene expression regulation." PloS one 6, no. 2 (2011): e16715.
+
+[5] Kong, Sek Won, Christin D. Collins, Yuko Shimizu-Motohashi, Ingrid A. Holm, Malcolm G. Campbell, In-Hee Lee, Stephanie J. Brewster et al. "Characteristics and predictive value of blood transcriptome signature in males with autism spectrum disorders." PLoS One 7, no. 12 (2012): e49475.
+
+[6] Chow, Maggie L., Tiziano Pramparo, Mary E. Winn, Cynthia Carter Barnes, Hai-Ri Li, Lauren Weiss, Jian-Bing Fan et al. "Age-dependent brain gene expression and copy number anomalies in autism suggest distinct pathological processes at young versus mature ages." PLoS genetics 8, no. 3 (2012): e1002592.
+
+
+Datasets
+------------------
+
+GSE25507 Dataset
+
+GSE18123 Dataset
+
+
+Programmes and Packages
+------------------
+
+[cluster](https://cran.r-project.org/web/packages/cluster/cluster.pdf)   
+[pvclust](https://cran.r-project.org/web/packages/pvclust/pvclust.pdf)   
+[xtable](https://cran.r-project.org/web/packages/xtable/xtable.pdf)   
+[limma](https://www.bioconductor.org/packages/devel/bioc/vignettes/limma/inst/doc/usersguide.pdf)   
+[GEOquery](https://github.com/seandavi/GEOquery)   
+[knitr](https://cran.r-project.org/web/packages/knitr/knitr.pdf)   
+[pheatmap](https://cran.r-project.org/web/packages/pheatmap/pheatmap.pdf)   
+[stringr](https://cran.r-project.org/web/packages/stringr/stringr.pdf)     
+[ggplot2](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf)   
+[reshape2](https://cran.r-project.org/web/packages/reshape2/reshape2.pdf)   
+[tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)    
+[ermineR](https://github.com/PavlidisLab/ermineR)     
+[devtools](https://cran.r-project.org/web/packages/devtools/index.html)   
+[Python](https://www.python.org/)    
+[NumPy](http://www.numpy.org/)    
+[scikit-learn](https://scikit-learn.org/stable/index.html) 
