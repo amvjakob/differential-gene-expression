@@ -3,7 +3,7 @@ Geneset Enrichment Analysis
 Virginia Pichler
 March 30, 2019
 
-#### Input metadata and expression data cleaned in the [pre\_processing\_data.Rmd](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/code/Pre_processing.rmd)
+#### Input metadata and expression data cleaned in the [preprocessing data](../preprocessing/Pre_processing.rmd).
 
 ### Load and format data
 
