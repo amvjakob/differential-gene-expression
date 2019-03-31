@@ -46,7 +46,7 @@ where,
 
 *β*<sub>0</sub> is the intercept vector.
 
-**a****g****e** is a continuous variable that indicates people age between 1 and 17.5. *β*<sub>1</sub> is the coefficient of the **c****e****l****l****\_****t****y****p****e**.
+**a****g****e** is a continuous variable that indicates people age between 1 and 17.5. *β*<sub>1</sub> is the coefficient of the **a****g****e** .
 
 **b****a****t****c****h** is a binary variable with 3 levels(batch 1, batch 2 and none). *β*<sub>2</sub> is the coefficient of the **b****a****t****c****h**.
 
