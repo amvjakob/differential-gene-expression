@@ -2,7 +2,7 @@
 
 # Welcome
 
-This is the repository of team Y0ung parents. It contains the work of a group of STAT 540 students on a project.
+This is the repository of team Y0ung parents. It contains the work of their group on the STAT 540 project.
 
 ## Project Goals
 
@@ -24,3 +24,5 @@ Code | This folder is our codebase. It contains the different rmd for our analys
 Data | This folder is our data sets used for our analysis. It does not contain large datasets.( over 200MB).
 [Click here](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/tree/master/data)
 Documents | This folder contains documents which explain our aims, and findings. | [Click here](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/tree/master/docs)
+
+
