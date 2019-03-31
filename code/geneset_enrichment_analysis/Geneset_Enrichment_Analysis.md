@@ -78,7 +78,7 @@ designMatrix <- model.matrix(~diagnosis, Meta_data_design)
 # lmfit 
 lmfit <- lmFit(combine_norm, designMatrix)
 
-# run ebayes to calculate moderated t-statistics
+# run ebayes to calculate moderated t-statistics, F-statistic, log-odds
 lmfit_ebayes <- eBayes(lmfit)
 ```
 
