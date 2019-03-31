@@ -16,7 +16,7 @@ GSE25507 has batch information(batch 1 and batch 2); however, GSE18123 has no in
 
 There are some missing values (15 samples) for our age variable. We consider these missing points might correlate with other variables(such as gender or batch). This satisfies the condition that the missing value is missing at random. Then we perform the multiple imputations with five repetitions for our age variable. The two pre-processed GEO datasets were merged after these the step.
 
-Normalization: We first took log2 transformation for both gene expression datasets. Since the scales of the two datasets are different, we decided that quantile normalization was appropriate for our data after considering a few normalization methods. The density plot of average gene expression value can be found in our analysis. For further details of this step, please refer to [pre\_processing\_data.Rmd](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/code/Pre_processing.md).
+Normalization: We first took log2 transformation for both gene expression datasets. Since the scales of the two datasets are different, we decided that quantile normalization was appropriate for our data after considering a few normalization methods. The density plot of average gene expression value can be found in our analysis. For further details of this step, please refer to [pre\_processing\_data.Rmd](../../code/preprocessing/Pre_processing.md).
 
 
 Statistical Methods
@@ -32,7 +32,7 @@ Linear regression: Linear regression was performed by using the “limma” pack
 
 Normality check: We need to check whether the residuals are normally distributed when we use linear regression. We use the Anderson-Darling and the Shapiro-Wilks test to check the residuals. We also us a Bonferroni correction on the significance threshold to control the number of false positives.
 
-More details for our analysis can be found in [exploratory\_and\_limma\_analyses.md](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/code/exploratory_and_Limma_analysis.md).
+More details for our analysis can be found in [exploratory\_and\_limma\_analyses.md](../../code/preprocessing/exploratory_and_limma_analysis/exploratory_and_Limma_analysis.md).
 
 Statistical Result
 ------------------
@@ -60,7 +60,7 @@ We identified 15 different genes between control and autism cases (p-value cutof
 Geneset Enrichment Analysis
 ------------------
 
-A geneset enrichment analysis was employed to evaluate the expression values of the genes for GO term multifunctionality. Input data for this analysis was generated in the [pre-processing]( ) step, where the expression data is combined from both datasets (GEO accession numbers GSE18123 and GSE25507 (P1)), cleaned and normalised. To further prepare the data, a differential expression analysis was run by creating a design matrix with the metadata, lmfit() to fit a linear model, and ebayes() to compute logFC values and the probes IDs were annotated with their corresponding gene symbols. The input data was subsequently subsetted to gene symbol and logFC. 
+A geneset enrichment analysis was employed to evaluate the expression values of the genes for GO term multifunctionality. Input data for this analysis was generated in the [pre-processing](../../code/preprocessing/Pre_processing.md ) step, where the expression data is combined from both datasets (GEO accession numbers GSE18123 and GSE25507 (P1)), cleaned and normalised. To further prepare the data, a differential expression analysis was run by creating a design matrix with the metadata, lmfit() to fit a linear model, and ebayes() to compute logFC values and the probes IDs were annotated with their corresponding gene symbols. The input data was subsequently subsetted to gene symbol and logFC. 
 
 Gene multifunctionality scores were inputted from the STAT540 Github repository and used to check for the degree of multifunctional bias. The method employed was a Spearman’s correlation, which outputted a coefficient value close to zero, indicating little to no multifunctional bias. 
 
@@ -68,7 +68,7 @@ Finally, a Precision-Recall method was utilised to calculate the p-value of GO t
 
 These results overall indicate a low level of multifunctional bias. Furthermore, the top ranked genesets for bias did not contain any of the predictor genes generated in the machine learning analysis. 
 
-[Full geneset enrichment analysis](../code/geneset_enrichment_analysis/Geneset_Enrichment_Analysis.md).
+[Full geneset enrichment analysis](../../code/geneset_enrichment_analysis/Geneset_Enrichment_Analysis.md).
 
 
 Machine Learning
@@ -84,7 +84,7 @@ Model 3: Random Forest (`sklearn.ensemble.RandomForestClassifier`) with 100 tree
 
 The models' selected genes and the top differentially expressed genes between control and autism cases identified by the linear regression were compared. 4 genes were found to overlap between model 1 and 2 (*GATA2, CXCR3, STATH, MMP27*), 3 genes between model 1 and the linear regression (*AC092718.4, PCM1, ORMDL1*) and 1 gene between model 2 and the linear regression (*HIST1H2BG*). Some of the identified genes have been associated with ASD in the literature, however most of them have a very broad range of functions in the human body. Age was not selected in any model.
 
-[Full Machine Learning Analysis](../code/ml/ML_results.md).
+[Full Machine Learning Analysis](../../code/ml/ML_results.md).
 
 
 References
