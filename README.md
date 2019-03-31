@@ -12,7 +12,7 @@ The links below will provide readers with a description of our aims and main fin
 
 - [Progess Report](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/docs/Progress%20Report/Progress_Report.md)
 
-- [Final Report]() 
+- [Techincal Report]() 
 
 ## Contents
 
