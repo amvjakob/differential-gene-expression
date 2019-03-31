@@ -64,6 +64,7 @@ Finally, a Precision-Recall method was utilised to calculate the p-value of GO t
 
 These results overall indicate a low level of multifunctional bias. Furthermore, the top ranked genesets for bias did not contain any of the predictor genes generated in the machine learning analysis. 
 
+[Full geneset enrichment analysis](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/code/geneset_enrichment_analysis/Geneset_Enrichment_Analysis.md)
 
 
 References
