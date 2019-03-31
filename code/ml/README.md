@@ -1,5 +1,7 @@
 # Machine Learning code
 
+The results can be found [here](ML_results.md).
+
 ## Python files
 - [extract.py](extract.py) and [extractR.py](extractR.py) are used to extract data from either the raw .txt or R into a processable form
 - [logReg.py](logReg.py) fits a logistic regression model to the data
