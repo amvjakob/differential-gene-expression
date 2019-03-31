@@ -68,13 +68,13 @@ Finally, a Precision-Recall method was utilised to calculate the p-value of GO t
 
 These results overall indicate a low level of multifunctional bias. Furthermore, the top ranked genesets for bias did not contain any of the predictor genes generated in the machine learning analysis. 
 
-[Full geneset enrichment analysis](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/code/geneset_enrichment_analysis/Geneset_Enrichment_Analysis.md)
+[Full geneset enrichment analysis](../code/geneset_enrichment_analysis/Geneset_Enrichment_Analysis.md).
 
 
 Machine Learning
 ------------------
 
-Using Python and the library scikit-learn, three binary classification models (predict ASD or not) were fitted to the expression values. Input data for this analysis was generated in the [preprocessing](src/preprocessing) step, where the expression data is combined from both datasets (GEO accession numbers GSE18123 and GSE25507 (P1)). The data was cleaned, normalized, log2-transformed and the gene expression values were set to mean 0 and standard deviation 1 for each gene. 70% of the total combined data was used for training and 30% was used for testing. The motivation behind this approach was to automatically let the model select the genes most relevant for prediction using an appropriate regularizer. Age was included to the data as an additional feature.
+Using Python and the library scikit-learn, three binary classification models to predict diagnosis based on gene expression value were fitted to the data. Input for this analysis was generated in the [preprocessing](src/preprocessing) step, where the expression data is combined from both datasets (GEO accession numbers GSE18123 and GSE25507). The data was cleaned, normalized, log2-transformed and the gene expression values were set to mean 0 and standard deviation 1 for each gene. 70% of the total combined data was used for training and 30% was used for testing. The motivation behind this approach was to automatically let the model select the genes most relevant for prediction using an appropriate regularizer for sparse solutions. Age was included to the data as an additional feature.
 
 Model 1: Logistic regression (`sklearn.linear_model.LogisticRegression`) with L1-penalty, inverse regularization strength C 0.1, maximum 100 iterations to train the model. The value for C was chosen using 4-fold cross-validation. The best model found uses 50 genes and achieves an average classification accuracy of 84% on the combined dataset. 
 
@@ -82,7 +82,9 @@ Model 2: Linear Support Vector Machine (SVM) trained with Stochastic Gradient De
 
 Model 3: Random Forest (`sklearn.ensemble.RandomForestClassifier`) with 100 trees per forest and a maximum depth of 20 for every tree. The best model found uses 3949 genes and achieves and average classification accuracy of 85% on the combined dataset. A prior gene selection is necessary for random forests to use a reasonable amount of genes. Since the goal of this step was to come up with said gene selection, this model was not further investigated.
 
-The models' selected genes and the top differentially expressed genes between control and autism cases identified by the linear regression were compared. 4 genes were found to overlap between model 1 and 2 (GATA2, CXCR3, STATH, MMP27), 3 genes between model 1 and the linear regression (AC092718.4, PCM1, ORMDL1) and 1 gene between model 2 and the linear regression (HIST1H2BG). The identified genes have been associated with ASD in the literature, however most of them have a very broad range of functions in the human body. Age was not selected in any model.
+The models' selected genes and the top differentially expressed genes between control and autism cases identified by the linear regression were compared. 4 genes were found to overlap between model 1 and 2 (*GATA2, CXCR3, STATH, MMP27*), 3 genes between model 1 and the linear regression (*AC092718.4, PCM1, ORMDL1*) and 1 gene between model 2 and the linear regression (*HIST1H2BG*). Some of the identified genes have been associated with ASD in the literature, however most of them have a very broad range of functions in the human body. Age was not selected in any model.
+
+[Full Machine Learning Analysis](../code/ml/ML_results.md).
 
 
 References
