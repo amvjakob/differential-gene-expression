@@ -5,7 +5,7 @@ March 30, 2019
 
 #### Input metadata and expression data cleaned in the [pre\_processing\_data.Rmd](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/code/Pre_processing.rmd)
 
-#### Load and format data
+### Load and format data
 
 ``` r
 #load in feature data
@@ -26,7 +26,7 @@ geo_GSE25507 <- getGEO("GSE25507", GSEMatrix = TRUE)
 
     ## File stored at:
 
-    ## C:\Users\Ginny\AppData\Local\Temp\RtmpYXSEW8/GPL570.soft
+    ## C:\Users\Ginny\AppData\Local\Temp\RtmpCkZ6oc/GPL570.soft
 
     ## Warning: 62 parsing failures.
     ##   row     col           expected    actual         file
@@ -60,7 +60,7 @@ Meta_data <- Meta_data %>% select(sample_id, everything())
 rownames(Meta_data) <- c()
 ```
 
-#### Create linear model
+### Create linear model
 
 ``` r
 # check equivalence of samples in metadata and expression data
@@ -82,7 +82,7 @@ lmfit <- lmFit(combine_norm, designMatrix)
 lmfit_ebayes <- eBayes(lmfit)
 ```
 
-#### Select, format and annotate genes for enrichment analysis
+### Select, format and annotate genes for enrichment analysis
 
 ``` r
 # select all genes and reformat and arrange data frame
@@ -106,7 +106,7 @@ subsettedallGenes<-allGenes[, c("gene", "logFC")]
 subsettedallGenes<-unique(subsettedallGenes)
 ```
 
-#### Geneset Enrichment Analysis
+### Geneset Enrichment Analysis
 
 ``` r
 # retrieve gene multifunctionality scores
@@ -119,8 +119,9 @@ gene_multifunctionality_scores<-read.csv(urlfile)
 mergedData <- subsettedallGenes %>% inner_join(gene_multifunctionality_scores, by = "gene")
 
 rankMfCor <- cor(abs(mergedData$logFC), mergedData$MF.score, method = "spearman")
+```
 
-
+``` r
 # plot Spearman's correlation 
 mergedData %>%
   ggplot(aes(x = abs(logFC), y = log10(MF.score))) + 
@@ -129,7 +130,7 @@ mergedData %>%
   ggtitle(paste0("r = ", rankMfCor))
 ```
 
-![](Geneset_Enrichment_Analysis_files/figure-markdown_github/unnamed-chunk-4-1.png)
+![](Geneset_Enrichment_Analysis_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 ``` r
 ### geneset enrichment analysis
@@ -165,16 +166,16 @@ enrichmentResult$results %>% arrange(MFPvalue)
     ## # A tibble: 3,494 x 12
     ##    Name  ID    NumProbes NumGenes RawScore    Pval CorrectedPvalue MFPvalue
     ##    <chr> <chr>     <dbl>    <dbl>    <dbl>   <dbl>           <dbl>    <dbl>
-    ##  1 posi~ GO:2~        62       62   0.0225 0.0001            0.335   0.0001
-    ##  2 nucl~ GO:0~        36       36   0.0308 0.0004            0.670   0.0002
-    ##  3 erro~ GO:0~        20       20   0.0517 0.0008            0.893   0.0008
-    ##  4 tran~ GO:0~        72       72   0.0197 0.0008            0.670   0.0008
-    ##  5 DNA ~ GO:0~       191      191   0.0194 0.00120           0.804   0.001 
-    ##  6 regu~ GO:2~       102      102   0.0178 0.0013            0.726   0.0011
-    ##  7 thyr~ GO:0~        21       21   0.0458 0.0014            0.670   0.0014
-    ##  8 telo~ GO:0~        22       22   0.0473 0.0014            0.586   0.0014
-    ##  9 nucl~ GO:0~        36       36   0.0302 0.0017            0.633   0.0017
-    ## 10 telo~ GO:0~        93       93   0.0170 0.0027            0.476   0.0017
+    ##  1 erro~ GO:0~        20       20   0.0517 0.0004            1     0.000300
+    ##  2 nucl~ GO:0~        36       36   0.0308 0.0007            1     0.000600
+    ##  3 DNA ~ GO:0~       191      191   0.0194 0.0007            0.781 0.000600
+    ##  4 regu~ GO:2~       102      102   0.0178 0.0009            0.502 0.0007  
+    ##  5 posi~ GO:2~        62       62   0.0225 0.0009            0.431 0.0008  
+    ##  6 thyr~ GO:0~        21       21   0.0458 0.0009            0.754 0.0009  
+    ##  7 telo~ GO:0~        22       22   0.0473 0.0009            0.603 0.0009  
+    ##  8 nucl~ GO:0~       106      106   0.0173 0.0014            0.521 0.0009  
+    ##  9 nucl~ GO:0~        24       24   0.0439 0.00120           0.502 0.00120 
+    ## 10 DNA-~ GO:0~       110      110   0.0172 0.0022            0.567 0.00120 
     ## # ... with 3,484 more rows, and 4 more variables: CorrectedMFPvalue <dbl>,
     ## #   Multifunctionality <dbl>, `Same as` <chr>, GeneMembers <chr>
 
@@ -185,7 +186,7 @@ enrichmentResult$results %>%
   geom_point(alpha = 0.2)
 ```
 
-![](Geneset_Enrichment_Analysis_files/figure-markdown_github/unnamed-chunk-4-2.png)
+![](Geneset_Enrichment_Analysis_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
 ``` r
 # top ten GO terms with largest adjustments 
@@ -201,13 +202,13 @@ enrichmentResult$results %>%
 
 | Name                                                         | ID           |    Pval|  MFPvalue|  neg\_log\_pvalue|  neg\_log\_mfpvalue|  log\_pvalue\_change|
 |:-------------------------------------------------------------|:-------------|-------:|---------:|-----------------:|-------------------:|--------------------:|
-| positive regulation of immune effector process               | <GO:0002699> |  0.2156|    0.0790|         0.6663512|           1.1023729|            0.4360217|
-| response to corticosteroid                                   | <GO:0031960> |  0.0903|    0.0344|         1.0443122|           1.4634416|            0.4191293|
-| regulation of blood vessel size                              | <GO:0050880> |  0.1961|    0.0774|         0.7075224|           1.1112590|            0.4037366|
-| regulation of muscle tissue development                      | <GO:1901861> |  0.2470|    0.0982|         0.6073030|           1.0078885|            0.4005855|
-| regulation of carbohydrate metabolic process                 | <GO:0006109> |  0.1272|    0.0509|         0.8955129|           1.2932822|            0.3977693|
-| regulation of muscle contraction                             | <GO:0006937> |  0.1272|    0.0509|         0.8955129|           1.2932822|            0.3977693|
-| vascular process in circulatory system                       | <GO:0003018> |  0.1821|    0.0734|         0.7396901|           1.1343039|            0.3946139|
-| response to ketone                                           | <GO:1901654> |  0.0745|    0.0301|         1.1278437|           1.5214335|            0.3935898|
-| regulation of cytokine secretion                             | <GO:0050707> |  0.2912|    0.1177|         0.5358086|           0.9292235|            0.3934149|
-| negative regulation of establishment of protein localization | <GO:1904950> |  0.2339|    0.0948|         0.6309698|           1.0231917|            0.3922219|
+| positive regulation of immune effector process               | <GO:0002699> |  0.2197|    0.0742|         0.6581699|           1.1295961|            0.4714262|
+| regulation of muscle tissue development                      | <GO:1901861> |  0.2546|    0.0977|         0.5941416|           1.0101054|            0.4159638|
+| regulation of peptide hormone secretion                      | <GO:0090276> |  0.0080|    0.0031|         2.0969100|           2.5086383|            0.4117283|
+| regulation of blood vessel size                              | <GO:0050880> |  0.2010|    0.0790|         0.6968039|           1.1023729|            0.4055690|
+| response to ketone                                           | <GO:1901654> |  0.0839|    0.0331|         1.0762380|           1.4801720|            0.4039340|
+| response to corticosteroid                                   | <GO:0031960> |  0.1000|    0.0395|         1.0000000|           1.4034029|            0.4034029|
+| negative regulation of establishment of protein localization | <GO:1904950> |  0.2491|    0.1036|         0.6036263|           0.9846402|            0.3810140|
+| regulation of carbohydrate metabolic process                 | <GO:0006109> |  0.1278|    0.0532|         0.8934691|           1.2740884|            0.3806192|
+| regulation of muscle contraction                             | <GO:0006937> |  0.1278|    0.0532|         0.8934691|           1.2740884|            0.3806192|
+| cellular response to acid chemical                           | <GO:0071229> |  0.2197|    0.0918|         0.6581699|           1.0371573|            0.3789874|
