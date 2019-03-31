@@ -1,5 +1,9 @@
 Technical Report
 ================
+Introduction
+---------------------------
+Autism Spectrum Disorder (ASD) large-scale whole exome sequencing studies have found there is no single gene, but a collection of rare variants distributed across many genes that confer its manifestation [1],[2]. The variants occur in regions of multiple general transcription factors, which lend to alterations in global levels of gene expression regulation. Expression profiles have been generated with RNA sequencing data from blood samples to develop predictive risk assessments of ASD in children. Previous studies have targeted peripheral blood lymphocytes (leukocyte type) [3] and whole peripheral blood (erythrocytes, thrombocytes, and leukocytes) [4] to generate transcriptome signatures, yet there has been little investigation as to whether a predictive model designed on one dataset may successfully be applied to a second, independent dataset. We are interested in comparing the global gene expression profiles of children with ASD versus a control group from these two studies, by generating our own predictive model using the combined data of both studies through machine learning methods to evaluate the robustness of its predictive power. To further substantiate the veracity of the model, we will use the metadata to evaluate global expression signatures across age, batch and diagnosis (autism vs control) and compare it to linear regression results of these variables.  Age was selected as a variable as gene regulation in individuals with ASD has been shown to fluctuate over development and maturation [5]. The validation of predictive risk models is fundamental to the refinement of ASD diagnostic tools and may lend to the development of gene-targeted treatments.
+
 
 Data Cleaning
 ---------------------------
@@ -70,15 +74,15 @@ These results overall indicate a low level of multifunctional bias. Furthermore,
 References
 ------------------
 
-[2] Anney, Richard, Lambertus Klei, Dalila Pinto, Joana Almeida, Elena Bacchelli, Gillian Baird, Nadia Bolshakova et al. "Individual common variants exert weak effects on the risk for autism spectrum disorders." Human molecular genetics 21, no. 21 (2012): 4781-4792.
+[1] Anney, Richard, Lambertus Klei, Dalila Pinto, Joana Almeida, Elena Bacchelli, Gillian Baird, Nadia Bolshakova et al. "Individual common variants exert weak effects on the risk for autism spectrum disorders." Human molecular genetics 21, no. 21 (2012): 4781-4792.
 
-[3] Liu, Li, Aniko Sabo, Benjamin M. Neale, Uma Nagaswamy, Christine Stevens, Elaine Lim, Corneliu A. Bodea et al. "Analysis of rare, exonic variation amongst subjects with autism spectrum disorders and population controls." PLoS genetics 9, no. 4 (2013): e1003443.
+[2] Liu, Li, Aniko Sabo, Benjamin M. Neale, Uma Nagaswamy, Christine Stevens, Elaine Lim, Corneliu A. Bodea et al. "Analysis of rare, exonic variation amongst subjects with autism spectrum disorders and population controls." PLoS genetics 9, no. 4 (2013): e1003443.
 
-[4] Alter, Mark D., Rutwik Kharkar, Keri E. Ramsey, David W. Craig, Raun D. Melmed, Theresa A. Grebe, R. Curtis Bay et al. "Autism and increased paternal age related changes in global levels of gene expression regulation." PloS one 6, no. 2 (2011): e16715.
+[3] Alter, Mark D., Rutwik Kharkar, Keri E. Ramsey, David W. Craig, Raun D. Melmed, Theresa A. Grebe, R. Curtis Bay et al. "Autism and increased paternal age related changes in global levels of gene expression regulation." PloS one 6, no. 2 (2011): e16715.
 
-[5] Kong, Sek Won, Christin D. Collins, Yuko Shimizu-Motohashi, Ingrid A. Holm, Malcolm G. Campbell, In-Hee Lee, Stephanie J. Brewster et al. "Characteristics and predictive value of blood transcriptome signature in males with autism spectrum disorders." PLoS One 7, no. 12 (2012): e49475.
+[4] Kong, Sek Won, Christin D. Collins, Yuko Shimizu-Motohashi, Ingrid A. Holm, Malcolm G. Campbell, In-Hee Lee, Stephanie J. Brewster et al. "Characteristics and predictive value of blood transcriptome signature in males with autism spectrum disorders." PLoS One 7, no. 12 (2012): e49475.
 
-[6] Chow, Maggie L., Tiziano Pramparo, Mary E. Winn, Cynthia Carter Barnes, Hai-Ri Li, Lauren Weiss, Jian-Bing Fan et al. "Age-dependent brain gene expression and copy number anomalies in autism suggest distinct pathological processes at young versus mature ages." PLoS genetics 8, no. 3 (2012): e1002592.
+[5] Chow, Maggie L., Tiziano Pramparo, Mary E. Winn, Cynthia Carter Barnes, Hai-Ri Li, Lauren Weiss, Jian-Bing Fan et al. "Age-dependent brain gene expression and copy number anomalies in autism suggest distinct pathological processes at young versus mature ages." PLoS genetics 8, no. 3 (2012): e1002592.
 
 
 Datasets
