@@ -21,8 +21,7 @@ This repo contains three folders. They are:
 Folder Name | Description | Link
 :------------ | :------------------------ | :----------------------------------:
 Code | This folder is our codebase. It contains the different rmd for our analysis. | [Click here](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/tree/master/code)
-Data | This folder is our data sets used for our analysis. It does not contain large datasets.( over 200MB).|
-[Click here](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/tree/master/data)
+Data | This folder is our data sets used for our analysis. It does not contain large datasets.( over 200MB).|[Click here](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/tree/master/data)
 Documents | This folder contains documents which explain our aims, and findings. | [Click here](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/tree/master/docs)
 
 
