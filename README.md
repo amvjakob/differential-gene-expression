@@ -14,7 +14,7 @@ The links below will provide readers with a description of our aims and main fin
 
 - [Technical Report](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/docs/Technical%20Report/Technical%20Report.md) 
 
-- [Presentation]()
+- [Presentation](https://github.com/STAT540-UBC/Repo_team_Y0ung-parents_W2019/blob/master/docs/STAT540%20Presentation%20-%20Y0ung-parents_W2019.pdf)
 
 ## Contents
 
